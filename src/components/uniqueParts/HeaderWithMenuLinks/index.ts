@@ -1,0 +1,1 @@
+export {HeaderWithMenuLinkConatainer as HeaderWithMenuLinks} from './container';
