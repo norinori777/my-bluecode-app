@@ -36,7 +36,22 @@ yarn add semver
 npx tailwindcss init
 ```
 ```
-npx tailwindcss -i ./src/css/style.css -o ./public/css/style.css --watch
+// index.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+```
+// tailwindcss.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+  },
+  plugins: [],
+}
 ```
 
 ## redux-toolkit
