@@ -42,7 +42,9 @@ npx tailwindcss -i ./src/css/style.css -o ./public/css/style.css --watch
 ## redux-toolkit
 - slices.tsを作成すると、actionも自動的に作成してくれ、Reduxでよく言われるボイラープレートの改善がされている。
 - storeの更新時にスプレッド構文を利用してStoreを更新していたが、その対応も不要となった。
-- 
+- 非同期処理とStoreの連携が容易にできる。
+
+参考：https://reffect.co.jp/react/redux-toolkit#:~:text=Redux%20Tool
 
 ## reactのルーティング
 
@@ -108,5 +110,4 @@ npx tailwindcss -i ./src/css/style.css -o ./public/css/style.css --watch
 ```
 
 
-## 参考
-https://zenn.dev/yuki_tu/articles/29e61e7634b272
+参考：https://zenn.dev/yuki_tu/articles/29e61e7634b272
