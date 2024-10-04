@@ -19,3 +19,12 @@ app.get('/member', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
+app.get('/todo', (req, res) => {
+  const todos = [
+    { id: 1, title: 'Buy the milk', done: false },
+    { id: 2, title: 'Pay the bill', done: true },
+    { id: 3, title: 'Go to the gym', done: false },
+  ];
+  res.json(todos);
+});

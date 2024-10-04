@@ -5,6 +5,43 @@
 npx create-react-app ./ --template typescript
 ```
 
+### Test
+- @testing-library/jest-dom
+- @testing-library/react
+- @testing-library/user-event
+- jest-environment-jsdom
+- axios-mock-adapter
+  
+```
+# jest.config.js
+module.exports = {
+    testEnvironment: "jest-environment-jsdom",
+}
+```
+
+# jestのEM６対応
+```
+yarn add @babel/preset-react @babel/preset-typescript babel-jest -D
+```
+```
+#.babelrc
+{
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+  ]
+}
+```
+```
+#jest.config.js
+module.exports = {
+  transform: {
+    '^.+\\.tsx?$': 'babel-jest',
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+};
+```
 ### Yarnへの切り替え
 1. package.jsonのlockファイルを削除
 2. 以下を実施。

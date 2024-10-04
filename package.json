@@ -4,14 +4,12 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
+    "@types/jest": "^29.5.13",
     "@types/node": "^16.18.111",
     "@types/react": "^18.3.9",
     "@types/react-dom": "^18.3.0",
     "axios": "^1.7.7",
+    "axios-mock-adapter": "^2.0.0",
     "cors": "^2.8.5",
     "express": "^4.21.0",
     "my-bluecode-app": "file:",
@@ -52,6 +50,24 @@
     ]
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.13"
+    "@babel/core": "^7.25.7",
+    "@babel/preset-typescript": "^7.25.7",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "babel-loader": "^9.2.1",
+    "esbuild": "^0.24.0",
+    "esbuild-jest": "^0.5.0",
+    "eslint": "^9.11.1",
+    "eslint-config-react-app": "^7.0.1",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "tailwindcss": "^3.4.13",
+    "ts-jest": "^29.2.5"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-typescript"
+    ]
   }
 }

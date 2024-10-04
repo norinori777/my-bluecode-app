@@ -10,7 +10,7 @@ export const todoSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetachTodoItemsAsync.fulfilled, (state, action) => {
+            .addCase(fetchTodoItemsAsync.fulfilled, (state, action) => {
                 state.loading = false
                 state.todos = action.payload
             })
@@ -39,7 +39,7 @@ export const todoSlice = createSlice({
     }
 })
 
-export const fetachTodoItemsAsync = createAsyncThunk('todo/fetchTodo',
+export const fetchTodoItemsAsync = createAsyncThunk('todo/fetchTodo',
     async () => {
         const todos = await fetchTodo()
         return todos
