@@ -1,4 +1,3 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 import { counterReducer, counterSlice } from '../counter/slices';
 import { initialState } from '../counter/initializes';

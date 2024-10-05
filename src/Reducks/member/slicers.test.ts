@@ -1,4 +1,3 @@
-// slices.test.ts
 import { memberReducer,fetchMemberItemsAsync } from './slices';
 import { configureStore } from '@reduxjs/toolkit';
 import axios from 'axios';
@@ -41,7 +40,7 @@ describe('memberのslicesのテスト', () => {
     });
   });
 
-  it('should handle fetchMemberItemsAsync.rejected', async () => {
+  it('fetchMemberItemsAsyncが情報取得失敗した場合', async () => {
     mock.onGet('http://localhost:8080/member').reply(500);
 
     const store = configureStore({ reducer: memberReducer });

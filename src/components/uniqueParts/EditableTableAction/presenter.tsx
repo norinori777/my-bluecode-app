@@ -2,13 +2,13 @@ import { Pencil } from "../../icons/Pencil";
 import { XCircle } from "../../icons/XCircle";
 import { Icon } from "../../uiParts/Icon";
 
-interface TableActionProps<T> {
+interface EditableTableActionProps<T> {
     target: T;
-    handleDelete: (target: T) => void;
-    handleEdit: (target: T) => void;
+    handleDelete: () => void;
+    handleEdit: () => void;
 }
 
-export const TableAction = <T,>(props: TableActionProps<T>) => {
+export const EditableTableAction = <T,>(props: EditableTableActionProps<T>) => {
 
     return (
     <div className="flex flex-row gap-2 cursor-pointer">

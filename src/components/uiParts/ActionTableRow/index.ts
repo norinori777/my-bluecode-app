@@ -1,1 +1,1 @@
-export {TodoActionTableRowContainer as ActionTableRow} from './container';
+export {TodoActionTableRowContainer} from './TodoActionTableRowContainer';

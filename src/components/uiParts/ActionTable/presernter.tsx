@@ -1,15 +1,26 @@
 import React from 'react'
+import { ActionElements } from '../ActionTableRow/types'
 
 interface ActionTableProps<T extends { [key in string]: string | boolean | number }> {
   titleHeader: string[]
   items: T[] | null
   actionRow: React.ElementType
-  actionColumn: number
+  actionElements: ActionElements
 }
 
 export const ActionTable = <T extends { [key in string]: string | boolean | number }>(
   props: ActionTableProps<T>
 ) => {
+  const getActionTtitleHeader = (nowCount: number, headerTitle: string, actionElements: ActionElements) => {
+    return actionElements
+      .filter(actionElement => nowCount === actionElement.position)
+      .map((actionElement) => (
+        <th scope="col" className="px-6 py-4">
+          {actionElement.headerTitle}
+        </th>
+      ))
+  }
+
   let count = 0
   return props.items === null ? (
     <p>{'データがありません。'}</p>
@@ -23,19 +34,13 @@ export const ActionTable = <T extends { [key in string]: string | boolean | numb
                 <tr>
                   {props.titleHeader.map((title) => {
                     count++
-                    return count === props.actionColumn ? (
+                    return (
                       <>
                         <th scope="col" className="px-6 py-4">
                           {title}
                         </th>
-                        <th scope="col" className="px-6 py-4">
-                          {'Action'}
-                        </th>
+                        {getActionTtitleHeader(count, title, props.actionElements)}
                       </>
-                    ) : (
-                      <th scope="col" className="px-6 py-4">
-                        {title}
-                      </th>
                     )
                   })}
                 </tr>
@@ -46,7 +51,7 @@ export const ActionTable = <T extends { [key in string]: string | boolean | numb
                     <props.actionRow
                       titleHeader={props.titleHeader}
                       item={item}
-                      actionColumn={props.actionColumn}
+                      actionElements={props.actionElements}
                     />
                   )
                 })}
