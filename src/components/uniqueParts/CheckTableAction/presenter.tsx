@@ -16,7 +16,7 @@ export const CheckBoxTableAction = (props: CheckBoxTableActionProps) => {
                 className="form-checkbox h-5 w-5 text-blue-600"
                 type="checkbox"
                 checked={props.check}
-                onChange={() => props.handleCheck()}
+                onChange={handleCheck}
             />
         </div>
     )

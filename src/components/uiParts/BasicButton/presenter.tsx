@@ -5,7 +5,7 @@ export interface ButtonProps {
   label: string
   theme: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'normal'
   type: 'button' | 'submit' | 'reset' | undefined
-  action: () => void
+  action?: () => void
 }
 
 export const BasicButton = (props: ButtonProps) => {

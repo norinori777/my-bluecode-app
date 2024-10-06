@@ -19,3 +19,8 @@ export const deleteTodo = async (id: number) => {
     const response = await axios.delete(`http://localhost:8080/todo/${id}`)
     return response.data
 }
+
+export const updateTodo = async (id: number, text: string) => {
+    const response = await axios.put(`http://localhost:8080/todo/text/${id}`, { text: text })
+    return response.data
+}

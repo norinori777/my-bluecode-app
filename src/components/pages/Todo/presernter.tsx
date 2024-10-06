@@ -11,7 +11,7 @@ interface TodoProps {
 }
 
 
-const titleHeader = ['id', 'title']
+const titleHeader = ['id', 'text']
 
 export const Todo = (props: TodoProps) => {
     return (
