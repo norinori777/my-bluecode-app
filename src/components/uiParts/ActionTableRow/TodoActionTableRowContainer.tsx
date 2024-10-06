@@ -1,14 +1,14 @@
 import React from 'react'
 import { todo } from '../../../Reducks/todo/types'
-import { TodoTableAction } from '../../uniqueParts/TodoTableAction'
 import { MenuLinkItem } from '../MenuLinkItem'
 import { ActionTableRow } from './presenter'
+import { ActionElements } from './types'
 
 
 interface TodoActionTableRowContainerProps {
   titleHeader: string[]
   item: todo
-  actionColumn: number
+  actionElements: ActionElements
 }
 
 export const TodoActionTableRowContainer = (props: TodoActionTableRowContainerProps) => {
@@ -17,8 +17,7 @@ export const TodoActionTableRowContainer = (props: TodoActionTableRowContainerPr
       titleHeader={props.titleHeader}
       targetLinks={[]}
       item={props.item}
-      actionColumn={props.actionColumn}
-      actionElement={TodoTableAction}
+      actionElements={props.actionElements}
       InCludeComponent={MenuLinkItem}
       linkPath="todo"
     />

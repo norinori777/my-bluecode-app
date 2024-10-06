@@ -11,7 +11,6 @@ export const memberSlice = createSlice({
         builder
             .addCase(fetchMemberItemsAsync.pending, (state, action) => {
                 state.loading = true
-                state.error = null
             })
             .addCase(fetchMemberItemsAsync.fulfilled, (state, action) => {
                 state.loading = false

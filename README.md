@@ -5,6 +5,44 @@
 npx create-react-app ./ --template typescript
 ```
 
+### Test
+- @testing-library/jest-dom
+- @testing-library/react
+- @testing-library/user-event
+- @testing-library/dom
+- jest-environment-jsdom
+- axios-mock-adapter
+  
+```
+# jest.config.js
+module.exports = {
+    testEnvironment: "jest-environment-jsdom",
+}
+```
+
+# jestのEM６対応
+```
+yarn add @babel/preset-react @babel/preset-typescript babel-jest -D
+```
+```
+#.babelrc
+{
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+  ]
+}
+```
+```
+#jest.config.js
+module.exports = {
+  transform: {
+    '^.+\\.tsx?$': 'babel-jest',
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+};
+```
 ### Yarnへの切り替え
 1. package.jsonのlockファイルを削除
 2. 以下を実施。
@@ -64,6 +102,16 @@ module.exports = {
 ## reactのルーティング
 
 
+## React Hook Form
+
+- 導入
+  ```
+  yarn add react-hook-form @hookform/resolvers yup
+  ```
+- 非制御系で利用することが推奨されているため、この方針に従いネイティブのHTMLフォーム要素を直接操作することでパフォーマンスが向上する。
+- Presentationコンポーネント: UIのレンダリングに専念し、propsを使用して状態を管理する。
+- Containerコンポーネント: React Hook Formを使用してフォームの状態を管理し、Presentationコンポーネントに必要なデータや関数を渡します。
+- 検証
 
 ## Re-ducksパターン
 

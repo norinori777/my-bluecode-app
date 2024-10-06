@@ -3,6 +3,7 @@ import { menuReducer } from '../menu/slices'
 import { contentReducer } from '../contents/slices'
 import { counterReducer } from '../counter/slices'
 import { memberReducer } from '../member/slices'
+import { todoReducer } from '../todo/slices'
 
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
         contents: contentReducer,
         counter: counterReducer,
         member: memberReducer,
+        todo: todoReducer,
     }
 })
 

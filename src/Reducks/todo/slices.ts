@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { addTodo, deleteTodo, doneTodo, fetchTodo } from "./operations"
+import { addTodo, deleteTodo, doneTodo, fetchTodo, updateTodo } from "./operations"
 import { initialTodoState } from "./initializes"
+import { todo } from "./types"
 
 
 export const todoSlice = createSlice({
@@ -10,7 +11,7 @@ export const todoSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetachTodoItemsAsync.fulfilled, (state, action) => {
+            .addCase(fetchTodoItemsAsync.fulfilled, (state, action) => {
                 state.loading = false
                 state.todos = action.payload
             })
@@ -19,6 +20,11 @@ export const todoSlice = createSlice({
                 state.todos.push(action.payload)
             })
             .addCase(updateDoneTodoAsync.fulfilled, (state, action) => {
+                state.loading = false
+                const index = state.todos.findIndex(todo => todo.id === action.payload.id)
+                state.todos[index] = action.payload
+            })
+            .addCase(updateTodoAsync.fulfilled, (state, action) => {
                 state.loading = false
                 const index = state.todos.findIndex(todo => todo.id === action.payload.id)
                 state.todos[index] = action.payload
@@ -39,7 +45,7 @@ export const todoSlice = createSlice({
     }
 })
 
-export const fetachTodoItemsAsync = createAsyncThunk('todo/fetchTodo',
+export const fetchTodoItemsAsync = createAsyncThunk('todo/fetchTodo',
     async () => {
         const todos = await fetchTodo()
         return todos
@@ -64,6 +70,13 @@ export const deleteTodoAsync = createAsyncThunk('todo/deleteTodo',
     async(id: number) => {
         const todo = await deleteTodo(id)
         return todo
+    }
+)
+
+export const updateTodoAsync = createAsyncThunk('todo/updateTodo',
+    async(todo: todo) => {
+        const result = await updateTodo(todo.id, todo.text)
+        return result
     }
 )
 

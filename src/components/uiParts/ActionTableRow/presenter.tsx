@@ -1,11 +1,12 @@
 import React from 'react'
+import { Action } from 'redux'
+import { ActionElement, ActionElements } from './types'
 
 interface ActionRowProps<T extends { [key in string]: string | boolean | number }> {
   titleHeader: string[]
   targetLinks: string[]
   item: T
-  actionColumn: number
-  actionElement: React.ElementType
+  actionElements: ActionElements
   InCludeComponent: React.ElementType
   linkPath: string
 }
@@ -24,20 +25,27 @@ export const ActionTableRow = <T extends { [key in string]: string | boolean | n
     )
   }
 
+  const getActionElement = (nowPostion: number, actionElements: ActionElements, item:T) => {
+    return actionElements
+      .filter(actionElement => actionElement.position === nowPostion)
+      .map((actionElement) => (
+        <td className="whitespace-nowrap px-6 py-4 font-medium">
+          <actionElement.element target={item} />
+        </td>
+      ))
+  }
+  
+
   let count = 0
   return (
     <tr className="border-b dark:border-neutral-500">
       {props.titleHeader.map((element) => {
         count++
-        return count === props.actionColumn ? (
+        return (
           <>
             <td className="whitespace-nowrap px-6 py-4 font-medium">{targetLinks(element)}</td>
-            <td className="whitespace-nowrap px-6 py-4 font-medium">
-              <props.actionElement item={props.item} />
-            </td>
+            {getActionElement(count, props.actionElements, props.item)}
           </>
-        ) : (
-          <td className="whitespace-nowrap px-6 py-4 font-medium">{targetLinks(element)}</td>
         )
       })}
     </tr>
