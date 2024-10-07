@@ -18,9 +18,9 @@ export const BasicTable = <T extends { [key in string]: string | boolean | numbe
             <table className="min-w-full text-left text-sm font-light">
               <thead className="border-b font-medium dark:border-neutral-500">
                 <tr>
-                  {props.titleHeader.map((title) => {
+                  {props.titleHeader.map((title, index) => {
                     return (
-                      <th scope="col" className="px-6 py-4">
+                      <th key={index} scope="col" className="px-6 py-4">
                         {title}
                       </th>
                     )
@@ -28,8 +28,8 @@ export const BasicTable = <T extends { [key in string]: string | boolean | numbe
                 </tr>
               </thead>
               <tbody>
-                {props.items?.map((item) => {
-                  return <Row titleHeader={props.titleHeader} item={item} />
+                {props.items?.map((item, index) => {
+                  return <Row key={index} titleHeader={props.titleHeader} item={item} />
                 })}
               </tbody>
             </table>
@@ -48,8 +48,8 @@ interface RowProps<T extends { [key in string]: string | boolean | number }> {
 const Row = <T extends { [key in string]: string | boolean | number }>(props: RowProps<T>) => {
   return (
     <tr className="border-b dark:border-neutral-500">
-      {props.titleHeader.map((element) => {
-        return <td className="whitespace-nowrap px-6 py-4 font-medium">{props.item[element]}</td>
+      {props.titleHeader.map((element, index) => {
+        return <td key={index} className="whitespace-nowrap px-6 py-4 font-medium">{props.item[element]}</td>
       })}
     </tr>
   )
