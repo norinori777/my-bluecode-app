@@ -1,19 +1,19 @@
 import { Counter } from "../components/pages/Counter"
 import { MemberList } from "../components/pages/MemberList"
-import { Test } from "../components/pages/Test"
+import { TestContainer } from "../components/pages/Test"
 import { Todo } from "../components/pages/Todo"
 import { TodoFormContainer } from "../components/pages/TodoForm"
 import { Top } from "../components/pages/Top"
-import { ContentItem } from "../Reducks/contents/types"
+import { ComponentMap, ContentItem } from "../Reducks/contents/types"
 import { HeaderMenuItem } from "../Reducks/menu/types"
 
 export const contentItems: ContentItem[] = [
-    { link: '/', key: 'top', component: Top },
-    { link: '/counter', key: 'counter', component: Counter },
-    { link: '/member', key: 'member', component: MemberList },
-    { link: '/todo', key: 'todo', component: Todo },
-    { link: '/todo/:id', key: 'todoForm', component: TodoFormContainer },
-    { link: '/test', key: 'test', component: Test },
+    { link: '/', key: 'top', componentId: 'Top' },
+    { link: '/counter', key: 'counter', componentId: 'Counter' },
+    { link: '/member', key: 'member', componentId: 'MemberList' },
+    { link: '/todo', key: 'todo', componentId: 'Todo' },
+    { link: '/todo/:id', key: 'todoForm', componentId: 'TodoForm' },
+    { link: '/test', key: 'test', componentId: 'Test' },
   ]
 
 export const headerMenuItems: HeaderMenuItem[] = [
@@ -23,3 +23,12 @@ export const headerMenuItems: HeaderMenuItem[] = [
     { text: 'Todo', initialLink: '/todo' },
     { text: 'Test', initialLink: '/test' },
   ]
+
+  export const componentMap: ComponentMap = {
+    'Top': Top,
+    'Counter': Counter,
+    'MemberList': MemberList,
+    'Todo': Todo,
+    'TodoForm': TodoFormContainer,
+    'Test': TestContainer,
+};

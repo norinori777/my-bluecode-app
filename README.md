@@ -49,6 +49,18 @@ module.exports = {
    ```
    yarn install
    ```
+### webpack
+```
+# Webpack導入
+yarn add --dev webpack webpack-cli html-webpack-plugin
+```
+```
+# CSS関連ローダー導入
+yarn add --dev  mini-css-extract-plugin css-minimizer-webpack-plugin css-loader postcss postcss-loader autoprefixer
+```
+```
+yarn add --dev ts-loader
+```
 
 ### Redux
 ```

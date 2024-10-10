@@ -1,6 +1,6 @@
 import { memberReducer,fetchMemberItemsAsync } from './slices';
 import { configureStore } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { initialState } from './initializes';
 

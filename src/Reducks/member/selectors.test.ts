@@ -12,6 +12,7 @@ describe('member selectors', () => {
             loading: false,
             error: null,
         },
+        test: { test: "hoge"}
         // other state slices if any
     };
 
