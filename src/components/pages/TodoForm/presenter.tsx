@@ -1,3 +1,4 @@
+import React from 'react'
 import { todo } from "../../../Reducks/todo/types"
 import { BasicButton } from "../../uiParts/BasicButton"
 import { TextField } from "../../uiParts/TextField"
@@ -11,7 +12,7 @@ interface TodoFormProps {
     loading: boolean
     error: string | null
     handleSubmit: (todo: todo) => void
-    handleError: (id: number) => void
+    handleError: (error: any) => void
 }
 
 export const TodoForm = (props: TodoFormProps) => {
@@ -26,7 +27,7 @@ export const TodoForm = (props: TodoFormProps) => {
         props.handleSubmit({id: props.todo?.id || 0, text: data.todo, done: false})
     }
     const onSubmitError = (error: any) => {
-        console.log(error)
+        props.handleError(error)
     }
 
     const textRegister = register('todo')
@@ -39,12 +40,14 @@ export const TodoForm = (props: TodoFormProps) => {
             <div className="p-2">
                 <TextMessage text="This is a simple todo create/modify page." size="base" theme="normal" />
                 <form onSubmit={handleSubmit(onSubmit, onSubmitError)} noValidate>
-                    <div className="flex flex-row p-2 gap-1">
-                        <TextField<UseFormRegisterReturn<"todo">> label="Todo" value={props.todo?.text || ""} placeholder="Please input task." theme="primary" description="" register={textRegister} />
-                        <div>{errors.todo?.message}</div>
-                        <div className="mt-8 mb-8">
+                    <div className="flex flex-row pl-2 gap-1">
+                        <TextField<UseFormRegisterReturn<'todo'>> label="Todo" value={props.todo?.text || ""} placeholder="TODOを入力してください。" theme="primary" description="" register={textRegister} />
+                        <div className="mt-7">
                             <BasicButton label="Create" type="submit" theme="primary" />
                         </div>
+                    </div>
+                    <div className="pl-4 -mt-7">
+                        <TextMessage text={errors.todo?.message || ''} size="sm" theme="danger" />
                     </div>
                 </form>
             </div>}

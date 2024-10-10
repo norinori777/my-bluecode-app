@@ -1,1 +1,1 @@
-export {Top} from './presenter';
+export {TopContainer} from './container';

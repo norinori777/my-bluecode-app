@@ -3,7 +3,7 @@ import { MemberList } from "../components/pages/MemberList"
 import { TestContainer } from "../components/pages/Test"
 import { Todo } from "../components/pages/Todo"
 import { TodoFormContainer } from "../components/pages/TodoForm"
-import { Top } from "../components/pages/Top"
+import { TopContainer } from "../components/pages/Top"
 import { ComponentMap, ContentItem } from "../Reducks/contents/types"
 import { HeaderMenuItem } from "../Reducks/menu/types"
 
@@ -25,7 +25,7 @@ export const headerMenuItems: HeaderMenuItem[] = [
   ]
 
   export const componentMap: ComponentMap = {
-    'Top': Top,
+    'Top': TopContainer,
     'Counter': Counter,
     'MemberList': MemberList,
     'Todo': Todo,
