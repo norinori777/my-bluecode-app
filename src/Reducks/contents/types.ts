@@ -1,5 +1,9 @@
 export type ContentItem = {
-    component: React.ElementType
+    componentId: string
     key: string
     link: string
 }
+
+export type ComponentMap = {
+    [key: string]: React.ComponentType<{ label: string }>;
+};

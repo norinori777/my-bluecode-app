@@ -65,3 +65,11 @@ app.delete('/todo/:id', (req, res) => {
   todos.splice(todos.indexOf(todo), 1);
   res.json(todo);
 });
+
+app.get('/test', (req, res) => {
+  const test = { test: 'Very Good' }
+  setTimeout(() => {
+    res.json(test);
+  }, 10000);
+  // res.json(test);
+});

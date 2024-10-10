@@ -1,5 +1,13 @@
 import React from 'react'
 
-export const Test = () => {
-  return <p>Test</p>
+interface testProps {
+  test: string
+}
+
+export const Test = (props: testProps) => {
+  return(
+    <>
+      <p>{props.test}</p>
+    </>
+  )
 }

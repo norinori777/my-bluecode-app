@@ -4,6 +4,7 @@ import { contentReducer } from '../contents/slices'
 import { counterReducer } from '../counter/slices'
 import { memberReducer } from '../member/slices'
 import { todoReducer } from '../todo/slices'
+import { testReducer } from '../test/slices'
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
         counter: counterReducer,
         member: memberReducer,
         todo: todoReducer,
+        test: testReducer
     }
 })
 

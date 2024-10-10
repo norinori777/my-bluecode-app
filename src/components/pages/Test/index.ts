@@ -1,1 +1,1 @@
-export {Test} from './presenter';
+export {TestContainer} from './container';
