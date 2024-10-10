@@ -35,8 +35,8 @@ export const TextField = <T,>(props: TextFieldProps<T>) => {
         {props.label}
       </label>
       <input
-        // type="text"
-        // id="success"
+        type="text"
+        id="success"
         // value={props.value}
         className={`${focusRingTheme} ring-gray-300 ring-2 focus:ring-2 focus:outline-none ${focusTextTheme} placeholder-gray-300 ${focusPlaceholderTheme} text-sm rounded-lg block w-full p-2.5`}
         placeholder={props.placeholder}

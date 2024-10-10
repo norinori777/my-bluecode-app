@@ -21,11 +21,11 @@ export const TodoFormContainer = () => {
         naviagte('/todo',{replace: true})
     }
 
-    const handleDeleteTodo = (id: number) => {
-        dispatch(deleteTodoAsync(id))
+    const handleError = (error: any) => {
+        console.log(error)
     }
 
     return (
-        <TodoForm todo={nowTodo} loading={loading} error={error} handleSubmit={handleUpdateTodo} handleError={handleDeleteTodo} />
+        <TodoForm todo={nowTodo} loading={loading} error={error} handleSubmit={handleUpdateTodo} handleError={handleError} />
     )
 }

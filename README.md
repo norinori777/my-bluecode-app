@@ -61,6 +61,85 @@ yarn add --dev  mini-css-extract-plugin css-minimizer-webpack-plugin css-loader 
 ```
 yarn add --dev ts-loader
 ```
+```
+# webpack.config
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const HtmlWebpckPlugin = require('html-webpack-plugin');
+
+
+module.exports = {
+    mode: 'development',
+    entry: './src/index.tsx',
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'public/js'),
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js', 'jsx', '.css', '.json'],
+    },
+    plugins: [
+        new HtmlWebpckPlugin({
+            template: './public/index.html',
+            filename: '../index.html'
+        }),
+        new MiniCssExtractPlugin({
+            filename: '../css/style.css',
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.css$/i,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+            }
+        ]
+    },
+    optimization: {
+        minimizer: [new CssMinimizerPlugin()],
+    }
+};
+```
+```
+# tsconfig
+{
+  "compilerOptions": {
+    "target": "es5",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules/*"]
+    },
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ]
+}
+
+```
 
 ### Redux
 ```
@@ -112,8 +191,39 @@ module.exports = {
 参考：https://reffect.co.jp/react/redux-toolkit#:~:text=Redux%20Tool
 
 ## reactのルーティング
+- 図にあるメニュー部のコンテンツをcontents.tsに配列景色で設定する。コンテンツを追加する場合、以下の定義に追加する。
+- ルーティング対象のコンテンツを読み込むコンポーネントにて以下の設定が読み込まれて、ルーティングコンテンツとして取り込まれる。
+  ```
+  # ルーディング対象のコンテンツ情報
+  export const contentItems: ContentItem[] = [
+    { link: '/', key: 'top', componentId: 'Top' },
+    { link: '/counter', key: 'counter', componentId: 'Counter' },
+    { link: '/member', key: 'member', componentId: 'MemberList' },
+    { link: '/todo', key: 'todo', componentId: 'Todo' },
+    { link: '/todo/:id', key: 'todoForm', componentId: 'TodoForm' },
+    { link: '/test', key: 'test', componentId: 'Test' },
+  ]
 
+  # メニュー表示情報
+  export const headerMenuItems: HeaderMenuItem[] = [
+      { text: 'Top', initialLink: '/' },
+      { text: 'Counter', initialLink: '/counter' },
+      { text: 'Member', initialLink: '/member' },
+      { text: 'Todo', initialLink: '/todo' },
+      { text: 'Test', initialLink: '/test' },
+    ]
 
+    # コンテンツのコンポーネント情報
+    export const componentMap: ComponentMap = {
+      'Top': TopContainer,
+      'Counter': Counter,
+      'MemberList': MemberList,
+      'Todo': Todo,
+      'TodoForm': TodoFormContainer,
+      'Test': TestContainer,
+  };
+  ```
+  ![alt text](image.png)
 ## React Hook Form
 
 - 導入
@@ -122,8 +232,30 @@ module.exports = {
   ```
 - 非制御系で利用することが推奨されているため、この方針に従いネイティブのHTMLフォーム要素を直接操作することでパフォーマンスが向上する。
 - Presentationコンポーネント: UIのレンダリングに専念し、propsを使用して状態を管理する。
-- Containerコンポーネント: React Hook Formを使用してフォームの状態を管理し、Presentationコンポーネントに必要なデータや関数を渡します。
+- Containerコンポーネント: React Hook Formを使用してフォームの状態を管理し、Presentationコンポーネントに必要なデータや関数を渡す。
 - 検証
+  - yupを利用して、バリデーションの定義を外出しにする。
+    ```
+    import * as yup from 'yup'
+
+    export const schema = yup.object({
+      todo: yup
+        .string()
+        .required('Todoの入力は必須です。')
+        .min(3, 'Todoは、３文字以上入力してください。')
+        .max(100, 'Todoは、最大１００文字となります。')
+    })
+  - Formにバリデーションの定義を渡す。
+    ```
+    export const TodoForm = (props: TodoFormProps) => {
+    const { register, handleSubmit, formState: {errors} } = useForm(
+        {
+            defaultValues: { todo: props.todo?.text || '' },
+            resolver: yupResolver(schema)
+        }
+    )
+    ```
+
 
 ## Re-ducksパターン
 
