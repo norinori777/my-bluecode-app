@@ -24,10 +24,10 @@ export const AddMemberForm = (props: AddMemberFormProps) => {
             defaultValues: {
                 name: props.name || '',
                 email: props.email || '' ,
-                position: props.position || null,
-                status: props.status || null,
-                resolver: yupResolver(schema)
-            }
+                position: props.position || undefined,
+                status: props.status || undefined
+            },
+            resolver: yupResolver(schema)
         }
     )
 
@@ -45,19 +45,22 @@ export const AddMemberForm = (props: AddMemberFormProps) => {
     }
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
+            <form onSubmit={handleSubmit(onSubmit, onSubmitError)} noValidate>
                 <div className="flex flex-col gap-4">
                     <div>
                         <Selectbox<UseFormRegisterReturn<'position'>> label={"役職選択"} items={[{text: 'admin', value: 'admin'}, {text: 'general', value: 'general'}]} noneSelectedText="役職を選択してください。" register={positionRegister} />
+                        <div className="pl-4 mt-2">
+                            <TextMessage text={errors.position?.message || ''} size="sm" theme="danger" />
+                        </div>
                     </div>
                     <div>
-                        <TextField<UseFormRegisterReturn<'name'>> label="名前" value={props.name || ""} placeholder="名前を入力してください。" theme="primary" description="" register={nameRegister} />
+                        <TextField<UseFormRegisterReturn<'name'>> id={'name'} label="名前" value={props.name || ""} placeholder="名前を入力してください。" theme="primary" description="" register={nameRegister} />
                         <div className="pl-4 -mt-4">
                             <TextMessage text={errors.name?.message || ''} size="sm" theme="danger" />
                         </div>
                     </div>
                     <div>
-                        <TextField<UseFormRegisterReturn<'email'>> label="メールアドレス" value={props.email || ""} placeholder="メールアドレスを入力してください。" theme="primary" description="" register={emailRegister} />
+                        <TextField<UseFormRegisterReturn<'email'>> id={'email'} label="メールアドレス" value={props.email || ""} placeholder="メールアドレスを入力してください。" theme="primary" description="" register={emailRegister} />
                         <div className="pl-4 -mt-4">
                             <TextMessage text={errors.email?.message || ''} size="sm" theme="danger" />
                         </div>
@@ -65,6 +68,9 @@ export const AddMemberForm = (props: AddMemberFormProps) => {
                     </div>
                     <div>
                         <Switch<UseFormRegisterReturn<'status'>> text="アクティブ" register={statusRegister} />
+                        <div className="pl-4 mt-2">
+                            <TextMessage text={errors.status?.message || ''} size="sm" theme="danger" />
+                        </div>
                     </div>
                     <div className="mt-7">
                         <BasicButton label="追加" type="submit" theme="primary" />

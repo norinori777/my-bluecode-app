@@ -5,7 +5,7 @@ export const schema = yup.object({
         .string()
         .required('Nameの入力は必須です。')
         .min(2, 'Nameは、2文字以上入力してください。')
-        .max(20, 'TNameは、最大20文字となります。'),
+        .max(20, 'Nameは、最大20文字となります。'),
     email: yup
         .string()
         .required('Emailの入力は必須です。')

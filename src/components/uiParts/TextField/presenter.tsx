@@ -3,6 +3,7 @@ import { theme } from '../../../utils/theme/types'
 import { getFocusPlaceholderTheme, getFocusRingTheme, getFocusTextTheme, getTextTheme } from '../../../utils/theme/theme'
 
 interface TextFieldProps<T> {
+  id: string
   label: string
   placeholder: string
   description: string
@@ -31,12 +32,12 @@ export const TextField = <T,>(props: TextFieldProps<T>) => {
 
   return (
     <div className="mb-6">
-      <label htmlFor="success" className={`block mb-2 text-sm font-medium  ${textTheme}`}>
+      <label htmlFor={props.id} className={`block mb-2 text-sm font-medium  ${textTheme}`}>
         {props.label}
       </label>
       <input
         type="text"
-        id="success"
+        id={props.id}
         // value={props.value}
         className={`${focusRingTheme} ring-gray-300 ring-2 focus:ring-2 focus:outline-none ${focusTextTheme} placeholder-gray-300 ${focusPlaceholderTheme} text-sm rounded-lg block w-full p-2.5`}
         placeholder={props.placeholder}
