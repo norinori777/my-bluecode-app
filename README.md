@@ -20,7 +20,7 @@ module.exports = {
 }
 ```
 
-# jestのEM６対応
+## jestのEM６対応
 ```
 yarn add @babel/preset-react @babel/preset-typescript babel-jest -D
 ```
@@ -142,7 +142,7 @@ module.exports = {
 
 ```
 
-### Redux
+## Redux
 ```
 yarn add redux react-redux typescript-fsa typescript-fsa-reducers 
 ```
@@ -150,12 +150,12 @@ yarn add redux react-redux typescript-fsa typescript-fsa-reducers
 yarn add @reduxjs/toolkit
 ```
 
-### react-router-dom
+## react-router-dom
 ```
 yarn add react-router-dom
 ```
 
-### tailWindcss
+## tailWindcss
 ```
 yarn add tailwindcss -D
 ```
@@ -225,6 +225,7 @@ module.exports = {
   };
   ```
   ![alt text](image.png)
+
 ## React Hook Form
 
 - 導入
@@ -257,6 +258,82 @@ module.exports = {
     )
     ```
 
+## 遅延ローディング
+SPAの場合、bundleしているJavaScriptのモジュールが大きくなる場合、読み込みに時間がかかる場合、
+遅延ローディングを実施することで、コンポーネントを必要なタイミングで別途読み込むことが可能。
+それにより、初期ローディング時間を削減することができる。
+
+### 遅延ローディング対象コンポーネントの指定
+コンポーネントを遅延ローディング対象にするには、lazy関数を使用して、対象とする。
+コンポーネントを指定する。
+
+```
+import React from "react"
+import { AddMemberContainer } from "../components/pages/AddMember"
+import { Counter } from "../components/pages/Counter"
+import { MemberList } from "../components/pages/MemberList"
+import { TestContainer } from "../components/pages/Test"
+import { Todo } from "../components/pages/Todo"
+import { TodoFormContainer } from "../components/pages/TodoForm"
+import { TopContainer } from "../components/pages/Top"
+import { ComponentMap, ContentItem } from "../Reducks/contents/types"
+import { HeaderMenuItem } from "../Reducks/menu/types"
+
+const TodoLazy = React.lazy(() => import('../components/pages/Todo').then(module => ({ default: module.Todo })))           // lazy関数でコンポーネントを指定
+const MemberListLazy = React.lazy(() => import('../components/pages/MemberList').then(module => ({ default: module.MemberList })))　　// lazy関数でコンポーネントを指定
+
+export const contentItems: ContentItem[] = [
+  { link: '/', key: 'top', componentId: 'Top' },
+  { link: '/counter', key: 'counter', componentId: 'Counter' },
+  { link: '/member', key: 'member', componentId: 'MemberList' },
+  { link: '/member/add', key: 'memberAdd', componentId: 'AddMember' },
+  { link: '/todo', key: 'todo', componentId: 'Todo' },
+  { link: '/todo/:id', key: 'todoForm', componentId: 'TodoForm' },
+  { link: '/test', key: 'test', componentId: 'Test' },
+]
+
+export const headerMenuItems: HeaderMenuItem[] = [
+  { text: 'Top', initialLink: '/' },
+  { text: 'Counter', initialLink: '/counter' },
+  { text: 'Member', initialLink: '/member' },
+  { text: 'Todo', initialLink: '/todo' },
+  { text: 'Test', initialLink: '/test' },
+]
+
+export const componentMap: ComponentMap = {
+  'Top': TopContainer,
+  'Counter': Counter,
+  'MemberList': MemberListLazy,
+  'Todo': TodoLazy,
+  'TodoForm': TodoFormContainer,
+  'Test': TestContainer,
+  'AddMember': AddMemberContainer
+};
+```
+
+### 遅延ローディング中のローディング
+遅延ローディング実施時に、ローディング中の表示できない状態で表示するための<Suspense>要素は必須となる。
+今回は、RouteLayoutの箇所で<Suspense>要素を指定した。fallbackにてローディング中に表示したいコンポーネントをしている。
+```
+import { Outlet } from "react-router-dom"
+import { HeaderWithMenuLinks } from "../../uniqueParts/HeaderWithMenuLinks"
+import { Suspense } from "react"
+
+export const RouteLayout = () => {
+    return (
+        <div className="flex flex-col w-screen">
+        <HeaderWithMenuLinks />
+        <div className="flex flex-row h-full w-full bg-slate-100">
+          <div>
+            <Suspense fallback={<div>読み込み中</div>} >  // ここ
+              <Outlet />
+            </Suspense>
+          </div>
+        </div>
+      </div>
+    )
+}
+```
 
 ## Re-ducksパターン
 
