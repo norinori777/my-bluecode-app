@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchMember } from "./operations";
+import { addMember, fetchMember } from "./operations";
 import { initialState } from "./initializes";
+import { AddUserType } from "./types";
 
 
 export const memberSlice = createSlice({
@@ -13,6 +14,10 @@ export const memberSlice = createSlice({
                 state.loading = true
             })
             .addCase(fetchMemberItemsAsync.fulfilled, (state, action) => {
+                state.loading = false
+                state.member = action.payload
+            })
+            .addCase(addMemberAsync.fulfilled, (state, action) => {
                 state.loading = false
                 state.member = action.payload
             })
@@ -29,6 +34,13 @@ export const fetchMemberItemsAsync = createAsyncThunk('member/fetchMember',
     async () => {
         const member = await fetchMember()
         return member
+    }
+)
+
+export const addMemberAsync = createAsyncThunk('member/addMember',
+    async ({ name, email, position, status }: AddUserType) => {
+        const newMember = await addMember(name, email, position, status)
+        return newMember
     }
 )
 

@@ -52,7 +52,7 @@ module.exports = {
 ### webpack
 ```
 # Webpack導入
-yarn add --dev webpack webpack-cli html-webpack-plugin
+yarn add --dev webpack webpack-cli html-webpack-plugin webpack-merge
 ```
 ```
 # CSS関連ローダー導入
@@ -80,6 +80,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js', 'jsx', '.css', '.json'],
     },
     plugins: [
+        //　htmlにバンドルしたjavascriptとCSSをセットする
         new HtmlWebpckPlugin({
             template: './public/index.html',
             filename: '../index.html'

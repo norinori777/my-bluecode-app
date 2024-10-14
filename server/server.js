@@ -9,10 +9,23 @@ app.use(cors()); // CORSミドルウェアを使用
 
 app.get('/member', (req, res) => {
   const members = [
-    { id: 1, name: 'Taro Yamada', email: 'taro.yamada@example.com' },
-    { id: 2, name: 'Jiro Yamada', email: 'jiro.yamada@example.com' },
-    { id: 3, name: 'Saburo Yamada', email: 'saburo.yamada@example.com' },
-    { id: 4, name: 'Shiro Yamada', email: 'Shiro.yamada@example.com' },
+    { id: 1, position: 'admin', name: 'Taro Yamada', email: 'taro.yamada@example.com', status: false },
+    { id: 2, position: 'general', name: 'Jiro Yamada', email: 'jiro.yamada@example.com', status: true },
+    { id: 3, position: 'general', name: 'Saburo Yamada', email: 'saburo.yamada@example.com', status: false },
+    { id: 4, position: 'admin', name: 'Shiro Yamada', email: 'Shiro.yamada@example.com', status: true },
+  ];
+  res.json(members);
+});
+
+
+app.post('/member/add', (req, res) => {
+  const members = [
+    { id: 1, position: 'admin', name: 'Taro Yamada', email: 'taro.yamada@example.com', status: false },
+    { id: 2, position: 'general', name: 'Jiro Yamada', email: 'jiro.yamada@example.com', status: true },
+    { id: 3, position: 'general', name: 'Saburo Yamada', email: 'saburo.yamada@example.com', status: false },
+    { id: 4, position: 'admin', name: 'Shiro Yamada', email: 'Shiro.yamada@example.com', status: true },
+    { id: 5, position: 'admin', name: 'Goro Yamada', email: 'Goro.yamada@example.com', status: true },
+
   ];
   res.json(members);
 });

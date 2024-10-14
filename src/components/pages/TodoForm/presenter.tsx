@@ -6,6 +6,7 @@ import { TextMessage } from "../../uiParts/TextMessage"
 import { useForm, UseFormRegisterReturn } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { schema } from "./validator"
+import { Dropdown } from '../../uiParts/Dropdown/presenter'
 
 interface TodoFormProps {
     todo?: todo | null
@@ -18,7 +19,8 @@ interface TodoFormProps {
 export const TodoForm = (props: TodoFormProps) => {
     const { register, handleSubmit, formState: {errors} } = useForm(
         {
-            defaultValues: { todo: props.todo?.text || '' },
+            defaultValues: {
+                todo: props.todo?.text || '' },
             resolver: yupResolver(schema)
         }
     )

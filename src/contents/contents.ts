@@ -1,3 +1,4 @@
+import { AddMemberContainer } from "../components/pages/AddMember"
 import { Counter } from "../components/pages/Counter"
 import { MemberList } from "../components/pages/MemberList"
 import { TestContainer } from "../components/pages/Test"
@@ -8,27 +9,29 @@ import { ComponentMap, ContentItem } from "../Reducks/contents/types"
 import { HeaderMenuItem } from "../Reducks/menu/types"
 
 export const contentItems: ContentItem[] = [
-    { link: '/', key: 'top', componentId: 'Top' },
-    { link: '/counter', key: 'counter', componentId: 'Counter' },
-    { link: '/member', key: 'member', componentId: 'MemberList' },
-    { link: '/todo', key: 'todo', componentId: 'Todo' },
-    { link: '/todo/:id', key: 'todoForm', componentId: 'TodoForm' },
-    { link: '/test', key: 'test', componentId: 'Test' },
-  ]
+  { link: '/', key: 'top', componentId: 'Top' },
+  { link: '/counter', key: 'counter', componentId: 'Counter' },
+  { link: '/member', key: 'member', componentId: 'MemberList' },
+  { link: '/member/add', key: 'memberAdd', componentId: 'AddMember' },
+  { link: '/todo', key: 'todo', componentId: 'Todo' },
+  { link: '/todo/:id', key: 'todoForm', componentId: 'TodoForm' },
+  { link: '/test', key: 'test', componentId: 'Test' },
+]
 
 export const headerMenuItems: HeaderMenuItem[] = [
-    { text: 'Top', initialLink: '/' },
-    { text: 'Counter', initialLink: '/counter' },
-    { text: 'Member', initialLink: '/member' },
-    { text: 'Todo', initialLink: '/todo' },
-    { text: 'Test', initialLink: '/test' },
-  ]
+  { text: 'Top', initialLink: '/' },
+  { text: 'Counter', initialLink: '/counter' },
+  { text: 'Member', initialLink: '/member' },
+  { text: 'Todo', initialLink: '/todo' },
+  { text: 'Test', initialLink: '/test' },
+]
 
-  export const componentMap: ComponentMap = {
-    'Top': TopContainer,
-    'Counter': Counter,
-    'MemberList': MemberList,
-    'Todo': Todo,
-    'TodoForm': TodoFormContainer,
-    'Test': TestContainer,
+export const componentMap: ComponentMap = {
+  'Top': TopContainer,
+  'Counter': Counter,
+  'MemberList': MemberList,
+  'Todo': Todo,
+  'TodoForm': TodoFormContainer,
+  'Test': TestContainer,
+  'AddMember': AddMemberContainer
 };

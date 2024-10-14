@@ -8,7 +8,7 @@ describe('member selectors', () => {
         counter: { count: 0 },
         todo: { todos:[], loading: false, error: null },
         member: {
-            member: [{ id: '1', name: 'John Doe', email: 'hoge@hoge.co.jp' }],
+            member: [{ id: '1', position: 'general', name: 'John Doe', email: 'hoge@hoge.co.jp', status: true }],
             loading: false,
             error: null,
         },
@@ -18,7 +18,7 @@ describe('member selectors', () => {
 
     it('should select member items', () => {
         const selected = memberItems(mockState);
-        expect(selected).toEqual([{ id: '1', name: 'John Doe', email: 'hoge@hoge.co.jp' }]);
+        expect(selected).toEqual([{ id: '1', position: 'general', name: 'John Doe', email: 'hoge@hoge.co.jp', status: true }]);
     });
 
     it('should select loading state', () => {

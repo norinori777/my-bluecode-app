@@ -8605,7 +8605,7 @@ multicast-dns@^7.2.5:
     axios-mock-adapter "^2.1.0"
     cors "^2.8.5"
     express "^4.21.1"
-    my-bluecode-app "file:./../../../Users/norin/AppData/Local/Yarn/Cache/v6/npm-my-bluecode-app-0.1.0-2f3ee410-4679-47c1-bf40-0dd0ea189582-1728518070462/node_modules/my-bluecode-app"
+    my-bluecode-app "file:./../../../Users/norin/AppData/Local/Yarn/Cache/v6/npm-my-bluecode-app-0.1.0-b4b65468-dac4-483d-a4e3-e1472a41cfab-1728570682129/node_modules/my-bluecode-app"
     react "^18.3.1"
     react-dom "^18.3.1"
     react-hook-form "^7.53.0"
@@ -8617,6 +8617,7 @@ multicast-dns@^7.2.5:
     typescript "^5.6.3"
     typescript-fsa "^3.0.0"
     typescript-fsa-reducers "^1.2.2"
+    web-vitals "^2.1.4"
     yup "^1.4.0"
 
 mz@^2.7.0:
@@ -12133,6 +12134,15 @@ webpack-merge@^5.7.3:
     flat "^5.0.2"
     wildcard "^2.0.0"
 
+webpack-merge@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-6.0.1.tgz#50c776868e080574725abc5869bd6e4ef0a16c6a"
+  integrity sha512-hXXvrjtx2PLYx4qruKl+kyRSLc52V+cCvMxRjmKwoA+CBbbF5GfIBtR6kCvl0fYGqTUPKB+1ktVmTHqMOzgCBg==
+  dependencies:
+    clone-deep "^4.0.1"
+    flat "^5.0.2"
+    wildcard "^2.0.1"
+
 webpack-sources@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.4.3.tgz#eedd8ec0b928fbf1cbfe994e22d2d890f330a933"
@@ -12316,7 +12326,7 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-wildcard@^2.0.0:
+wildcard@^2.0.0, wildcard@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/wildcard/-/wildcard-2.0.1.tgz#5ab10d02487198954836b6349f74fff961e10f67"
   integrity sha512-CC1bOL87PIWSBhDcTrdeLo6eGT7mCFtrg0uIJtqJUFyK+eJnzl8A1niH56uu7KMa5XFrtiV+AQuHO3n7DsHnLQ==
