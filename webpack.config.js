@@ -6,6 +6,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 
 module.exports = {
+    watch: true,
     mode: 'development',
     entry: './src/index.tsx',
     output: {

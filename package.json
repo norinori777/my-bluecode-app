@@ -30,6 +30,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "watch": "webpack --watch",
     "build": "webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

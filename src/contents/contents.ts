@@ -1,3 +1,4 @@
+import React from "react"
 import { AddMemberContainer } from "../components/pages/AddMember"
 import { Counter } from "../components/pages/Counter"
 import { MemberList } from "../components/pages/MemberList"
@@ -7,6 +8,9 @@ import { TodoFormContainer } from "../components/pages/TodoForm"
 import { TopContainer } from "../components/pages/Top"
 import { ComponentMap, ContentItem } from "../Reducks/contents/types"
 import { HeaderMenuItem } from "../Reducks/menu/types"
+
+const TodoLazy = React.lazy(() => import('../components/pages/Todo').then(module => ({ default: module.Todo })))
+const MemberListLazy = React.lazy(() => import('../components/pages/MemberList').then(module => ({ default: module.MemberList })))
 
 export const contentItems: ContentItem[] = [
   { link: '/', key: 'top', componentId: 'Top' },
@@ -29,8 +33,8 @@ export const headerMenuItems: HeaderMenuItem[] = [
 export const componentMap: ComponentMap = {
   'Top': TopContainer,
   'Counter': Counter,
-  'MemberList': MemberList,
-  'Todo': Todo,
+  'MemberList': MemberListLazy,
+  'Todo': TodoLazy,
   'TodoForm': TodoFormContainer,
   'Test': TestContainer,
   'AddMember': AddMemberContainer
