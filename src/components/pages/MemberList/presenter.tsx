@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import { user } from "../../../Reducks/member/types";
 import { BasicTable } from "../../uiParts/BasicTable";
 import { TextMessage } from "../../uiParts/TextMessage"
+import { LinkWithIcon } from "../../uiParts/LinkWithIcon";
 
 interface MemberListProps {
     memberList: user[];
@@ -8,9 +10,14 @@ interface MemberListProps {
     error: string | null;
 }
 
-const titleHeader = ['id', 'name', 'email']
+const titleHeader = ['id', 'position', 'name', 'email', 'status']
 
 export const MemberList = (props: MemberListProps) => {
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        navigate('/member/add')
+    }
 
     return (
         <div className="p-6">
@@ -18,6 +25,7 @@ export const MemberList = (props: MemberListProps) => {
             <TextMessage text={props.error !== null ? props.error : ''} size="base" theme="danger" />
             {props.loading ? <div>Loading...</div> : 
             <div className="p-2">
+                <LinkWithIcon theme="primary" text="メンバー追加" action={handleClick} />
                 <TextMessage text="This is a simple member list page." size="base" theme="normal" />
                 <div className="flex flex-row p-2 gap-1">
                     <BasicTable<user> titleHeader={titleHeader} items={props.memberList} />

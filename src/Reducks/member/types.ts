@@ -8,6 +8,15 @@ export interface MemberState {
 
 export type user = {
     id: string;
+    position: string;
     name: string;
     email: string;
+    status: boolean;
+}
+
+export type AddUserType = {
+    position: string;
+    name: string;
+    email: string;
+    status: boolean;
 }

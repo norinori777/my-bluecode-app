@@ -49,8 +49,12 @@ const Row = <T extends { [key in string]: string | boolean | number }>(props: Ro
   return (
     <tr className="border-b dark:border-neutral-500">
       {props.titleHeader.map((element, index) => {
-        return <td key={index} className="whitespace-nowrap px-6 py-4 font-medium">{props.item[element]}</td>
+        return <td key={index} className="whitespace-nowrap px-6 py-4 font-medium">{typeof props.item[element] === 'boolean' ? convertBooleanToString(props.item[element]) : props.item[element] }</td>
       })}
     </tr>
   )
+}
+
+const convertBooleanToString = (value: boolean) => {
+  return value ? '有効' : '無効'
 }
