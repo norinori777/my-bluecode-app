@@ -15,11 +15,11 @@ export const DragAndDrop = (props: DragAndDropProps) => {
 
     return (
         <div className="p-6">
-            <TextMessage text="Todo Page" size="2xl" theme="primary" underline={true} /> 
+            <TextMessage text="Drag and Drop Page" size="2xl" theme="primary" underline={true} /> 
             <TextMessage text={props.error !== null ? props.error : ''} size="base" theme="danger" />
             {props.loading ? <div>Loading...</div> : 
             <div className="p-2">
-                <TextMessage text="This is a simple todo list page." size="base" theme="normal" />
+                <TextMessage text="This is a simple Drag and Drop Table page." size="base" theme="normal" />
                 <div className="flex flex-row p-2 gap-1">
             <MemberActionTableContainer 
                 titleHeader={['id', 'name', 'email', 'position']}
