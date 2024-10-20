@@ -7,7 +7,11 @@ import { AddUserType } from "./types";
 export const memberSlice = createSlice({
     name: 'member',
     initialState: initialState,
-    reducers: {},
+    reducers: {
+        updateMember: (state, action) => {
+            state.member = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchMemberItemsAsync.pending, (state, action) => {
@@ -44,4 +48,5 @@ export const addMemberAsync = createAsyncThunk('member/addMember',
     }
 )
 
+export const { updateMember } = memberSlice.actions
 export const memberReducer = memberSlice.reducer

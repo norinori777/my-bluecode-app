@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActionElements } from '../ActionTableRow/types'
+import { ActionElements } from '../ActionTableDandDRow/types'
 
 interface ActionTableProps<T extends { [key in string]: string | boolean | number }> {
   titleHeader: string[]
