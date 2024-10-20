@@ -335,6 +335,13 @@ export const RouteLayout = () => {
 }
 ```
 
+## Drag and　Drop
+ReactでDrag and Dropを利用するため、以下を導入。
+```
+yarn add react-dnd react-dnd-html5-backend
+```
+
+
 ## Re-ducksパターン
 
 ```
