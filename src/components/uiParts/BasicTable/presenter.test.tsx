@@ -6,7 +6,7 @@ import { BasicTable } from './presenter'
 interface TestItem {
     id: number
     name: string
-    active: string
+    active: boolean
     [key: string]: string | number | boolean
 }
 
@@ -18,8 +18,8 @@ describe('BasicTable', () => {
 
     test('itemsの数だけrowが表示されること', () => {
         const items: TestItem[] = [
-            { id: 1, name: 'Item 1', active: 'true' },
-            { id: 2, name: 'Item 2', active: 'false' },
+            { id: 1, name: 'Item 1', active: true },
+            { id: 2, name: 'Item 2', active: false },
         ]
         render(<BasicTable<TestItem> titleHeader={['id', 'name', 'active']} items={items} />)
         expect(screen.getAllByRole('row')).toHaveLength(3)
@@ -27,8 +27,8 @@ describe('BasicTable', () => {
 
     test('表のヘッダーとデータが正しく表示されること', () => {
         const items: TestItem[] = [
-            { id: 1, name: 'Item 1', active: 'true' },
-            { id: 2, name: 'Item 2', active: 'false' },
+            { id: 1, name: 'Item 1', active: true },
+            { id: 2, name: 'Item 2', active: false },
         ]
         render(<BasicTable<TestItem> titleHeader={['id', 'name', 'active']} items={items} />)
 
@@ -40,10 +40,10 @@ describe('BasicTable', () => {
         // Check data
         expect(screen.getByText('1')).toBeInTheDocument()
         expect(screen.getByText('Item 1')).toBeInTheDocument()
-        expect(screen.getByText('true')).toBeInTheDocument()
+        expect(screen.getByText('有効')).toBeInTheDocument()
         expect(screen.getByText('2')).toBeInTheDocument()
         expect(screen.getByText('Item 2')).toBeInTheDocument()
-        expect(screen.getByText('false')).toBeInTheDocument()
+        expect(screen.getByText('無効')).toBeInTheDocument()
 
         expect(screen.getAllByRole('row')).toHaveLength(3)
     })
