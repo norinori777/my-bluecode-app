@@ -8,10 +8,7 @@ interface TextFieldProps<T> {
   placeholder: string
   description: string
   theme: theme
-  value: string
   register: T
-  handleChange?: (e: ChangeEvent<HTMLInputElement>) => void
-  handleDoubleByteChange?: (e: CompositionEvent<HTMLInputElement>) => void
 }
 
 export const TextField = <T,>(props: TextFieldProps<T>) => {
@@ -38,13 +35,10 @@ export const TextField = <T,>(props: TextFieldProps<T>) => {
       <input
         type="text"
         id={props.id}
-        // value={props.value}
         className={`${focusRingTheme} ring-gray-300 ring-2 focus:ring-2 focus:outline-none ${focusTextTheme} placeholder-gray-300 ${focusPlaceholderTheme} text-sm rounded-lg block w-full p-2.5`}
         placeholder={props.placeholder}
         onFocus={onFocusHandle}
         onBlur={onBlurHandle}
-        // onChange={props.handleChange}
-        // onCompositionEnd={props.handleDoubleByteChange}
         {...props.register}
       />
       <p className={`mt-2 text-sm ${textTheme}`}>{props.description}</p>

@@ -1,14 +1,12 @@
-import { useSelector } from "react-redux"
+import React from 'react'
 import { Contents } from "./presenter"
-import { contentItems } from "../../../Reducks/contents"
-import { componentMap } from "../../../contents/contents"
+import { contentItems, componentMap } from "../../../contents/contents"
 
 export const ContentsContainer = () =>{
-    const contents = useSelector(contentItems)
 
     return (
         <>
-            <Contents contents={contents} componentMap={componentMap} />
+            <Contents contents={contentItems} componentMap={componentMap} />
         </>
     )
 }
