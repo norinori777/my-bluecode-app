@@ -54,13 +54,13 @@ export const AddMemberForm = (props: AddMemberFormProps) => {
                         </div>
                     </div>
                     <div>
-                        <TextField<UseFormRegisterReturn<'name'>> id={'name'} label="名前" value={props.name || ""} placeholder="名前を入力してください。" theme="primary" description="" register={nameRegister} />
+                        <TextField<UseFormRegisterReturn<'name'>> id={'name'} label="名前" placeholder="名前を入力してください。" theme="primary" description="" register={nameRegister} />
                         <div className="pl-4 -mt-4">
                             <TextMessage text={errors.name?.message || ''} size="sm" theme="danger" />
                         </div>
                     </div>
                     <div>
-                        <TextField<UseFormRegisterReturn<'email'>> id={'email'} label="メールアドレス" value={props.email || ""} placeholder="メールアドレスを入力してください。" theme="primary" description="" register={emailRegister} />
+                        <TextField<UseFormRegisterReturn<'email'>> id={'email'} label="メールアドレス" placeholder="メールアドレスを入力してください。" theme="primary" description="" register={emailRegister} />
                         <div className="pl-4 -mt-4">
                             <TextMessage text={errors.email?.message || ''} size="sm" theme="danger" />
                         </div>
