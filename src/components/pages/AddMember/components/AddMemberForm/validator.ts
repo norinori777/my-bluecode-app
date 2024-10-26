@@ -1,11 +1,20 @@
 import * as yup from 'yup'
 
-export const schema = yup.object({
+export const schema = (externalType: string) => yup.object({
     name: yup
         .string()
         .required('Nameの入力は必須です。')
         .min(2, 'Nameは、2文字以上入力してください。')
-        .max(20, 'Nameは、最大20文字となります。'),
+        // .max(20, 'Nameは、最大20文字となります。'),
+        .when('externalType', (exteralType, schema) => {
+            if(externalType === 'hoge') {
+                return schema.max(30, 'Nameは、最大30文字となります。')
+            }
+            if(externalType === 'hage') {
+                return schema.max(20, 'Nameは、最大20文字となります。')
+            }
+            return schema
+        }),
     email: yup
         .string()
         .required('Emailの入力は必須です。')
