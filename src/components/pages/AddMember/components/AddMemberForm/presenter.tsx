@@ -27,7 +27,7 @@ export const AddMemberForm = (props: AddMemberFormProps) => {
                 position: props.position || undefined,
                 status: props.status || undefined
             },
-            resolver: yupResolver(schema)
+            resolver: yupResolver(schema('hoge'))
         }
     )
 
