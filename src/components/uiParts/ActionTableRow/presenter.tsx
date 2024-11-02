@@ -1,6 +1,5 @@
 import React from 'react'
-import { Action } from 'redux'
-import { ActionElement, ActionElements } from './types'
+import { ActionElements } from './types'
 
 interface ActionRowProps<T extends { [key in string]: string | boolean | number }> {
   titleHeader: string[]

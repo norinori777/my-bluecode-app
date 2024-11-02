@@ -7,7 +7,7 @@ export interface MemberState {
 }
 
 export type user = {
-    id: string;
+    id: number;
     position: string;
     name: string;
     email: string;

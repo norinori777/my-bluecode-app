@@ -1,0 +1,1 @@
+export { MultiTablesContainer } from "./container"
