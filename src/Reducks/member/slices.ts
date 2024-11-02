@@ -10,6 +10,9 @@ export const memberSlice = createSlice({
     reducers: {
         updateMember: (state, action) => {
             state.member = action.payload
+        },
+        deleteMember: (state, action) => {
+            state.member = state.member.filter((member) => member.id !== action.payload)
         }
     },
     extraReducers: (builder) => {
@@ -48,5 +51,5 @@ export const addMemberAsync = createAsyncThunk('member/addMember',
     }
 )
 
-export const { updateMember } = memberSlice.actions
+export const { updateMember,deleteMember } = memberSlice.actions
 export const memberReducer = memberSlice.reducer

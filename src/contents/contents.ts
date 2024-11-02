@@ -8,6 +8,7 @@ import { ComponentMap, ContentItem } from "../Reducks/contents/types"
 import { HeaderMenuItem } from "../Reducks/menu/types"
 import { DragAndDropContainer } from "../components/pages/DragAndDrop"
 import { PaginationTableContainer } from "../components/pages/PaginationTable"
+import { MultiTablesContainer } from "../components/pages/MultiTables"
 
 const TodoLazy = React.lazy(() => import('../components/pages/Todo').then(module => ({ default: module.Todo })))
 const MemberListLazy = React.lazy(() => import('../components/pages/MemberList').then(module => ({ default: module.MemberList })))
@@ -22,6 +23,7 @@ export const contentItems: ContentItem[] = [
   { link: '/dnd', key: 'dnd', componentId: 'DragAndDrop' },
   { link: '/pagination', key: 'pagination', componentId: 'PaginationTable'},
   { link: '/test', key: 'test', componentId: 'Test' },
+  {link: '/multiTables', key: 'multiTables', componentId: 'MultiTables'},
 ]
 
 export const headerMenuItems: HeaderMenuItem[] = [
@@ -32,6 +34,7 @@ export const headerMenuItems: HeaderMenuItem[] = [
   { text: 'DragAndDrop', initialLink: '/dnd' },
   { text: 'PaginationTable', initialLink: '/pagination'},
   { text: 'Test', initialLink: '/test' },
+  { text: 'MultiTables', initialLink: '/multiTables' },
 ]
 
 export const componentMap: ComponentMap = {
@@ -44,4 +47,5 @@ export const componentMap: ComponentMap = {
   'AddMember': AddMemberContainer,
   'DragAndDrop': DragAndDropContainer,
   'PaginationTable': PaginationTableContainer,
+  'MultiTables': MultiTablesContainer
 };

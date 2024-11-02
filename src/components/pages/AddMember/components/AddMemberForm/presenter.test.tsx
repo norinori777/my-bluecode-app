@@ -80,7 +80,7 @@ describe('メンバー追加Formのテスト', () => {
     test("名前が30文字以上で追加ボタンをクリックするとエラーメッセージが表示されること", async() => {
         const { typeName, clickButton, typeNameClear } = Setup()
         await typeNameClear()
-        await typeName('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+        await typeName('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
         await clickButton()
         await waitFor(()=>{
             expect(screen.getByText('Nameは、最大30文字となります。')).toBeInTheDocument()
