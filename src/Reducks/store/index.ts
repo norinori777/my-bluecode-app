@@ -5,6 +5,7 @@ import { counterReducer } from '../counter/slices'
 import { memberReducer } from '../member/slices'
 import { todoReducer } from '../todo/slices'
 import { testReducer } from '../test/slices'
+import { fileuploadReducer } from '../fileupload/slicers'
 
 
 export const store = configureStore({
@@ -14,7 +15,8 @@ export const store = configureStore({
         counter: counterReducer,
         member: memberReducer,
         todo: todoReducer,
-        test: testReducer
+        test: testReducer,
+        fileupload: fileuploadReducer
     }
 })
 

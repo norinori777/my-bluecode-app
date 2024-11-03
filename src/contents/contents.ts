@@ -9,6 +9,7 @@ import { HeaderMenuItem } from "../Reducks/menu/types"
 import { DragAndDropContainer } from "../components/pages/DragAndDrop"
 import { PaginationTableContainer } from "../components/pages/PaginationTable"
 import { MultiTablesContainer } from "../components/pages/MultiTables"
+import { FileUploadContainer } from "../components/pages/Fileupload/container"
 
 const TodoLazy = React.lazy(() => import('../components/pages/Todo').then(module => ({ default: module.Todo })))
 const MemberListLazy = React.lazy(() => import('../components/pages/MemberList').then(module => ({ default: module.MemberList })))
@@ -22,7 +23,7 @@ export const contentItems: ContentItem[] = [
   { link: '/todo/:id', key: 'todoForm', componentId: 'TodoForm' },
   { link: '/dnd', key: 'dnd', componentId: 'DragAndDrop' },
   { link: '/pagination', key: 'pagination', componentId: 'PaginationTable'},
-  { link: '/test', key: 'test', componentId: 'Test' },
+  { link: '/fileupload', key: 'fileupload', componentId: 'FileUpload' },
   {link: '/multiTables', key: 'multiTables', componentId: 'MultiTables'},
 ]
 
@@ -33,7 +34,7 @@ export const headerMenuItems: HeaderMenuItem[] = [
   { text: 'Todo', initialLink: '/todo' },
   { text: 'DragAndDrop', initialLink: '/dnd' },
   { text: 'PaginationTable', initialLink: '/pagination'},
-  { text: 'Test', initialLink: '/test' },
+  { text: 'FileUpload', initialLink: '/fileupload' },
   { text: 'MultiTables', initialLink: '/multiTables' },
 ]
 
@@ -43,7 +44,7 @@ export const componentMap: ComponentMap = {
   'MemberList': MemberListLazy,
   'Todo': TodoLazy,
   'TodoForm': TodoFormContainer,
-  'Test': TestContainer,
+  'FileUpload': FileUploadContainer,
   'AddMember': AddMemberContainer,
   'DragAndDrop': DragAndDropContainer,
   'PaginationTable': PaginationTableContainer,

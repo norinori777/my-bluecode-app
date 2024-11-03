@@ -1,6 +1,8 @@
 // server.js
 const express = require('express');
-const cors = require('cors'); // CORSミドルウェアをインポート
+const cors = require('cors');
+const multer = require('multer');
+ // CORSミドルウェアをインポート
 const app = express();
 const port = 8080;
 
@@ -166,4 +168,13 @@ app.get('/test', (req, res) => {
     res.json(test);
   }, 10000);
   // res.json(test);
+});
+
+const upload = multer();
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+  res.json({ file: req.file });
 });
