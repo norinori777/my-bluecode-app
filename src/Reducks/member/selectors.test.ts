@@ -6,6 +6,7 @@ describe('member selectors', () => {
         menu: { headerMenuItems: [], selectedMeneItem: { text: '', initialLink: '' } },
         contents: { contentItems: [] },
         counter: { count: 0 },
+        fileupload: { file: null, loading: false, error: null },
         todo: { todos:[], loading: false, error: null },
         member: {
             member: [{ id: 1, position: 'general', name: 'John Doe', email: 'hoge@hoge.co.jp', status: true }],

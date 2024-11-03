@@ -5,15 +5,17 @@ import { Provider } from 'react-redux';
 import { store } from './Reducks/store';
 import './index.css';
 import { App } from './App';
-
+import { Worker } from '@react-pdf-viewer/core';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Worker>
   </React.StrictMode>
 );
 
