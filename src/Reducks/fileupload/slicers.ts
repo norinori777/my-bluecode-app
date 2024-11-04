@@ -13,6 +13,9 @@ export const fileuploadSlice = createSlice({
         },
         deleteFile: (state) => {
             state.file = null
+            state.file2 = null
+            state.loading = false
+            state.error = null
         }
     },
     extraReducers: (builder) => {
@@ -39,8 +42,6 @@ export const fileuploadSlice = createSlice({
     },
 })
 
-
-
 export const fetchFileItemsAsync = createAsyncThunk('fileupload/fetchFile',
     async () => {
         const file = await fetchFile()
@@ -61,7 +62,6 @@ export const addFileAsync2 = createAsyncThunk('fileupload/addFile2',
         return newFile
     }
 )
-
 
 export const { updateFile, deleteFile } = fileuploadSlice.actions
 export const fileuploadReducer = fileuploadSlice.reducer

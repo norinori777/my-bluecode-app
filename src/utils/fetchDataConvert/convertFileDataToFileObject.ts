@@ -1,5 +1,5 @@
 // convertBufferToFile 関数は、バッファデータを File オブジェクトに変換します。
-const convertBufferToFile = (bufferData: { type: string, data: number[] }, fileName: string, mimeType: string): File => {
+export const convertBufferToFile = (bufferData: { type: string, data: number[] }, fileName: string, mimeType: string): File => {
     // bufferData.data 配列から Uint8Array を作成します。
     const byteArray = new Uint8Array(bufferData.data)
         // Uint8Array から Blob オブジェクトを作成します。

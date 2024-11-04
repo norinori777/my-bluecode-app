@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fileItems, fileItems2, loading, error } from "../../../Reducks/fileupload/selectors";
 import { FileUpload } from "./presenter";
-import { addFileAsync, addFileAsync2, updateFile } from "../../../Reducks/fileupload/slicers";
+import { addFileAsync, addFileAsync2, deleteFile, updateFile } from "../../../Reducks/fileupload/slicers";
 import { AppDispatch } from "../../../Reducks/store";
-
+import { useEffect } from "react";
 
 export const FileUploadContainer = () => {
     const file = useSelector(fileItems)
@@ -20,6 +20,13 @@ export const FileUploadContainer = () => {
         // dispatch(updateFile(files[0]))
         dispatch(addFileAsync2({file:files[0]}))
     }
+
+    useEffect(() => {
+        return () => {
+            dispatch(deleteFile());
+        };
+    }, [dispatch]);
+
     return (
         <>
             <h1>ArrayBuffer</h1>
