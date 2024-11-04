@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { initialState } from "./initializes"
-import { addFile, fetchFile } from "./operatoins"
-import { convertBufferToFile } from "../../utils/fetchDataConvert/convertBufferToFile"
+import { addFile, addFile2, fetchFile } from "./operatoins"
+import { convertBufferToFile, convertBase64ToFile } from "../../utils/fetchDataConvert/convertFileDataToFileObject"
 
 
 export const fileuploadSlice = createSlice({
@@ -13,30 +13,34 @@ export const fileuploadSlice = createSlice({
         },
         deleteFile: (state) => {
             state.file = null
+            state.file2 = null
+            state.loading = false
+            state.error = null
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchFileItemsAsync.pending, (state, action) => {
-                state.loading = true
-            })
-            .addCase(fetchFileItemsAsync.fulfilled, (state, action) => {
-                state.loading = false
-                state.file = action.payload
-            })
             .addCase(addFileAsync.fulfilled, (state, action) => {
                 state.loading = false
                 state.file = convertBufferToFile(action.payload.file.buffer, action.payload.file.fileName, action.payload.file.mimeType)
             })
-            .addCase(fetchFileItemsAsync.rejected, (state, action) => {
+            .addCase(addFileAsync2.fulfilled, (state, action) => {
+                state.loading = false
+                state.file2 = convertBase64ToFile(action.payload.file, action.payload.fileName, action.payload.mimeType)
+            })
+            .addMatcher(action => action.type.endsWith('/pending'), (state, action) => {
+                state.loading = true
+                state.error = null
+            })
+            .addMatcher(action => action.type.endsWith('/rejected'), (state, action: any) => {
                 state.loading = false
                 state.file = null
+                state.file2 = null
                 state.error = action.error.message || 'Failed to fetch file';
             })
+            
     },
 })
-
-
 
 export const fetchFileItemsAsync = createAsyncThunk('fileupload/fetchFile',
     async () => {
@@ -52,6 +56,12 @@ export const addFileAsync = createAsyncThunk('fileupload/addFile',
     }
 )
 
+export const addFileAsync2 = createAsyncThunk('fileupload/addFile2',
+    async ({ file }: AddFileType) => {
+        const newFile = await addFile2(file)
+        return newFile
+    }
+)
 
 export const { updateFile, deleteFile } = fileuploadSlice.actions
 export const fileuploadReducer = fileuploadSlice.reducer

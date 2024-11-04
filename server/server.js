@@ -178,3 +178,14 @@ app.post('/file/add', upload.single('file'), (req, res) => {
   }
   res.json({ file: req.file });
 });
+
+app.post('/file/add2', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.')
+  }
+  if (req.file.mimetype !== 'application/pdf') {
+    return res.status(400).send('Uploaded file is not a PDF.');
+  }
+  const base64File = req.file.buffer.toString('base64')
+  res.json({ file: base64File, filename: req.file.originalname, mimetype: req.file.mimetype });
+});
