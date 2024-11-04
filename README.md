@@ -341,6 +341,28 @@ ReactでDrag and Dropを利用するため、以下を導入。
 yarn add react-dnd react-dnd-html5-backend
 ```
 
+## React-PDF-VIEWER
+REACTでPDFの表示を容易するため、以下を導入
+```
+yarn add pdfjs-dist@3.4.120
+yarn add @react-pdf-viewer/core @react-pdf-viewer/default-layout
+```
+
+pdf-viewerでは、PDFの表示処理をサポートするService-Workerを利用する。
+そのため、pdfjs-distは、利用するService-Workerと同じバージョンのソフトウェアを導入する必要がある。
+
+Service-Workerを利用するため、index.tsxに以下のタグを追加した。
+```
+root.render(
+  <React.StrictMode>
+    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js"> // このタグを追加
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Worker>
+  </React.StrictMode>
+```
+
 
 ## Re-ducksパターン
 

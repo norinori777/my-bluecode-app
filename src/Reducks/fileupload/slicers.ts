@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { initialState } from "./initializes"
 import { addFile, fetchFile } from "./operatoins"
+import { convertBufferToFile } from "../../utils/fetchDataConvert/convertBufferToFile"
 
 
 export const fileuploadSlice = createSlice({
@@ -25,7 +26,7 @@ export const fileuploadSlice = createSlice({
             })
             .addCase(addFileAsync.fulfilled, (state, action) => {
                 state.loading = false
-                state.file = action.payload
+                state.file = convertBufferToFile(action.payload.file.buffer, action.payload.file.fileName, action.payload.file.mimeType)
             })
             .addCase(fetchFileItemsAsync.rejected, (state, action) => {
                 state.loading = false
@@ -34,6 +35,8 @@ export const fileuploadSlice = createSlice({
             })
     },
 })
+
+
 
 export const fetchFileItemsAsync = createAsyncThunk('fileupload/fetchFile',
     async () => {

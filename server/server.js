@@ -172,7 +172,7 @@ app.get('/test', (req, res) => {
 
 const upload = multer();
 
-app.post('/upload', upload.single('file'), (req, res) => {
+app.post('/file/add', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).send('No file uploaded.');
   }
