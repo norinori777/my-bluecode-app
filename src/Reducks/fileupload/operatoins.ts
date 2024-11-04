@@ -8,6 +8,10 @@ export const fetchFile = async () => {
 export const addFile = async (file: File) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await axios.post('http://localhost:8080/file/add', formData);
+  const response = await axios.post('http://localhost:8080/file/add', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
   return response.data;
 }

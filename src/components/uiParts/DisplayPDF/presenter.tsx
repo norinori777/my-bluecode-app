@@ -1,5 +1,5 @@
 import React from 'react';
-import { Viewer } from '@react-pdf-viewer/core';
+import { ScrollMode, SpecialZoomLevel, Viewer, ViewMode } from '@react-pdf-viewer/core';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 interface DisplayPDFProps {
@@ -7,11 +7,18 @@ interface DisplayPDFProps {
 }
 
 const DisplayPDF = (props: DisplayPDFProps) => {
-    return (
-        <div>
-            <Viewer fileUrl={props.pdfData} />
+    return(
+        <div style={{ 
+            height: '400px', 
+            border: '1px solid rgba(0, 0, 0, 0.3)', 
+            overflow: 'auto',  }}>
+            <Viewer
+            fileUrl={props.pdfData}
+            defaultScale={SpecialZoomLevel.PageFit}
+            scrollMode={ScrollMode.Vertical}
+        />
         </div>
-    );
-};
+    )
+}
 
 export default DisplayPDF;
