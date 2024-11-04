@@ -15,3 +15,14 @@ export const addFile = async (file: File) => {
   });
   return response.data;
 }
+
+export const addFile2 = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  const response = await axios.post('http://localhost:8080/file/add2', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  return response.data;
+}
