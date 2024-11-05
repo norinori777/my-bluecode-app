@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addMember, fetchMember } from "./operations";
+import { addMember, deleteMemberOperaton, fetchMember } from "./operations";
 import { initialState } from "./initializes";
 import { AddUserType } from "./types";
 
@@ -32,9 +32,6 @@ export const memberSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchMemberItemsAsync.pending, (state, action) => {
-                state.loading = true
-            })
             .addCase(fetchMemberItemsAsync.fulfilled, (state, action) => {
                 state.loading = false
                 state.member = action.payload
@@ -43,7 +40,16 @@ export const memberSlice = createSlice({
                 state.loading = false
                 state.member = action.payload
             })
-            .addCase(fetchMemberItemsAsync.rejected, (state, action) => {
+            .addCase(deleteMemberAsync.fulfilled, (state, action: any) => {
+                state.loading = false
+                // state.member = state.member.filter((member) => member.id !== action.payload.id)
+                state.member = state.member.filter((member) => member.id != action.payload.id)
+            })
+            .addMatcher(action => action.type.endsWith('/pending'), (state, action) => {
+                state.loading = true
+                state.error = null
+            })
+            .addMatcher(action => action.type.endsWith('/rejected'), (state, action:any) => {
                 state.loading = false
                 state.member = []
                 state.error = action.error.message || 'Failed to fetch member';
@@ -63,6 +69,13 @@ export const addMemberAsync = createAsyncThunk('member/addMember',
     async ({ name, email, position, status }: AddUserType) => {
         const newMember = await addMember(name, email, position, status)
         return newMember
+    }
+)
+
+export const  deleteMemberAsync = createAsyncThunk('member/deleteMember',
+    async (id: string) => {
+        const deleteMemberId = await deleteMemberOperaton(id)
+        return deleteMemberId
     }
 )
 

@@ -10,7 +10,7 @@ describe('member selectors', () => {
         todo: { todos:[], loading: false, error: null },
         member: {
             searchText: '',
-            member: [{ id: 1, position: 'general', name: 'John Doe', email: 'hoge@hoge.co.jp', status: true }],
+            member: [{ id: '1', position: 'general', name: 'John Doe', email: 'hoge@hoge.co.jp', status: true }],
             loading: false,
             error: null,
         },
@@ -20,7 +20,7 @@ describe('member selectors', () => {
 
     it('should select member items', () => {
         const selected = memberItems(mockState);
-        expect(selected).toEqual([{ id: 1, position: 'general', name: 'John Doe', email: 'hoge@hoge.co.jp', status: true }]);
+        expect(selected).toEqual([{ id: '1', position: 'general', name: 'John Doe', email: 'hoge@hoge.co.jp', status: true }]);
     });
 
     it('should select loading state', () => {
