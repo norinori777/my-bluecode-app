@@ -9,20 +9,24 @@ const port = 8080;
 app.use(express.json()); // Add this middleware to parse JSON bodies
 app.use(cors()); // CORSミドルウェアを使用
 
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
+
 app.get('/member', (req, res) => {
   const members = [
-    { id: 1, position: 'admin', name: 'Taro Yamada', email: 'taro.yamada@example.com', status: false },
-    { id: 2, position: 'general', name: 'Jiro Yamada', email: 'jiro.yamada@example.com', status: true },
-    { id: 3, position: 'general', name: 'Saburo Yamada', email: 'saburo.yamada@example.com', status: false },
-    { id: 4, position: 'admin', name: 'Shiro Yamada', email: 'Shiro.yamada@example.com', status: true },
-    { id: 5, position: 'admin', name: 'Goro Yamada', email: 'goro.yamada@example.com', status: true },
-    { id: 6, position: 'general', name: 'Rokuro Yamada', email: 'rokuro.yamada@example.com', status: false },
-    { id: 7, position: 'general', name: 'Shichiro Yamada', email: 'shichiro.yamada@example.com', status: true },
-    { id: 8, position: 'admin', name: 'Hachiro Yamada', email: 'hachiro.yamada@example.com', status: false },
-    { id: 9, position: 'general', name: 'Kuro Yamada', email: 'kuro.yamada@example.com', status: true },
-    { id: 10, position: 'admin', name: 'Juro Yamada', email: 'juro.yamada@example.com', status: false },
-    { id: 11, position: 'hoge', name: 'Ichiro Yamada', email: 'ichiro.yamada@example.com', status: true },
-    { id: 12, position: 'hoge', name: 'Nijiro Yamada', email: 'nijiro.yamada@example.com', status: false },
+    { id: '1', position: 'admin', name: 'Taro Yamada', email: 'taro.yamada@example.com', status: false },
+    { id: '2', position: 'general', name: 'Jiro Yamada', email: 'jiro.yamada@example.com', status: true },
+    { id: '3', position: 'general', name: 'Saburo Yamada', email: 'saburo.yamada@example.com', status: false },
+    { id: '4', position: 'admin', name: 'Shiro Yamada', email: 'Shiro.yamada@example.com', status: true },
+    { id: '5', position: 'admin', name: 'Goro Yamada', email: 'goro.yamada@example.com', status: true },
+    { id: '6', position: 'general', name: 'Rokuro Yamada', email: 'rokuro.yamada@example.com', status: false },
+    { id: '7', position: 'general', name: 'Shichiro Yamada', email: 'shichiro.yamada@example.com', status: true },
+    { id: '8', position: 'admin', name: 'Hachiro Yamada', email: 'hachiro.yamada@example.com', status: false },
+    { id: '9', position: 'general', name: 'Kuro Yamada', email: 'kuro.yamada@example.com', status: true },
+    { id: '10', position: 'admin', name: 'Juro Yamada', email: 'juro.yamada@example.com', status: false },
+    { id: '11', position: 'hoge', name: 'Ichiro Yamada', email: 'ichiro.yamada@example.com', status: true },
+    { id: '12', position: 'hoge', name: 'Nijiro Yamada', email: 'nijiro.yamada@example.com', status: false },
     // { id: 13, position: 'general', name: 'Sanjuro Yamada', email: 'sanjuro.yamada@example.com', status: true },
     // { id: 14, position: 'admin', name: 'Shijiro Yamada', email: 'shijiro.yamada@example.com', status: false },
     // { id: 15, position: 'general', name: 'Gojuro Yamada', email: 'gojuro.yamada@example.com', status: true },
@@ -100,6 +104,11 @@ app.get('/member', (req, res) => {
   res.json(members);
 });
 
+app.delete('/member/delete/:id', (req, res) => {
+  console.log("delete ID:" + req.params.id);
+  const id = req.params.id;
+  return res.json({ id: id });
+});
 
 app.post('/member/add', (req, res) => {
   const members = [
@@ -113,10 +122,30 @@ app.post('/member/add', (req, res) => {
   res.json(members);
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
 
+app.put('/member/update/:id', (req, res) => {
+  const members = [
+    { id: '1', position: 'admin', name: 'Taro Yamada', email: 'taro.yamada@example.com', status: false },
+    { id: '2', position: 'general', name: 'Jiro Yamada', email: 'jiro.yamada@example.com', status: true },
+    { id: '3', position: 'general', name: 'Saburo Yamada', email: 'saburo.yamada@example.com', status: false },
+    { id: '4', position: 'admin', name: 'Shiro Yamada', email: 'Shiro.yamada@example.com', status: true },
+    { id: '5', position: 'admin', name: 'Goro Yamada', email: 'goro.yamada@example.com', status: true },
+    { id: '6', position: 'general', name: 'Rokuro Yamada', email: 'rokuro.yamada@example.com', status: false },
+    { id: '7', position: 'general', name: 'Shichiro Yamada', email: 'shichiro.yamada@example.com', status: true },
+    { id: '8', position: 'admin', name: 'Hachiro Yamada', email: 'hachiro.yamada@example.com', status: false },
+    { id: '9', position: 'general', name: 'Kuro Yamada', email: 'kuro.yamada@example.com', status: true },
+    { id: '10', position: 'admin', name: 'Juro Yamada', email: 'juro.yamada@example.com', status: false },
+    { id: '11', position: 'hoge', name: 'Ichiro Yamada', email: 'ichiro.yamada@example.com', status: true },
+    { id: '12', position: 'hoge', name: 'Nijiro Yamada', email: 'nijiro.yamada@example.com', status: false },
+    { id: '13', position: 'general', name: 'Sanjuro Yamada', email: 'sanjuro.yamada@example.com', status: true },
+    { id: '14', position: 'admin', name: 'Shijiro Yamada', email: 'shijiro.yamada@example.com', status: false },
+    { id: '15', position: 'general', name: 'Gojuro Yamada', email: 'gojuro.yamada@example.com', status: true },
+    { id: '16', position: 'admin', name: 'Rokujuro Yamada', email: 'rokujuro.yamada@example.com', status: false },
+    { id: '17', position: 'general', name: 'Shichijuro Yamada', email: 'shichijuro.yamada@example.com', status: true },
+  ]
+  res.json(members);
+
+});
 app.get('/todo', (req, res) => {
   const todos = [
     { id: 1, text: 'Buy the milk', done: false },
@@ -149,6 +178,7 @@ app.put('/todo/text/:id', (req, res) => {
   todo.text = req.body.text;
   res.json(todo);
 });
+
 
 app.delete('/todo/:id', (req, res) => {
   const id = req.params.id;

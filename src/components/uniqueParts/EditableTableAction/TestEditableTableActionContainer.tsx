@@ -3,7 +3,7 @@ import { AppDispatch } from "../../../Reducks/store"
 import { EditableTableAction } from "./presenter"
 import { useNavigate } from "react-router-dom"
 import { user } from "../../../Reducks/member/types"
-import { deleteMember } from "../../../Reducks/member/slices"
+import { deleteMemberAsync, updateMemberAsync } from "../../../Reducks/member/slices"
 
 interface TestTableActionContainerProps {
     target: user
@@ -15,11 +15,13 @@ export const TestEditableTableActionContainer = (props: TestTableActionContainer
 
 
     const handleEdit = () => {
-        navigate(`/member/${props.target.id}`)
+        // navigate(`/member/${props.target.id}`)
+        dispatch(updateMemberAsync(props.target.id))
     }
 
     const handleDelete = () => {
-        dispatch(deleteMember(props.target.id))
+        // dispatch(deleteMember(props.target.id))
+        dispatch(deleteMemberAsync(props.target.id))
     }
     return (
         <>
