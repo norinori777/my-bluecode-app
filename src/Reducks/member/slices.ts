@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addMember, deleteMemberOperaton, fetchMember } from "./operations";
+import { addMember, deleteMemberOperaton, fetchMember, updateMemberOperation } from "./operations";
 import { initialState } from "./initializes";
 import { AddUserType } from "./types";
 
@@ -45,6 +45,10 @@ export const memberSlice = createSlice({
                 // state.member = state.member.filter((member) => member.id !== action.payload.id)
                 state.member = state.member.filter((member) => member.id != action.payload.id)
             })
+            .addCase(updateMemberAsync.fulfilled, (state, action) => {
+                state.loading = false
+                state.member = action.payload
+            })
             .addMatcher(action => action.type.endsWith('/pending'), (state, action) => {
                 state.loading = true
                 state.error = null
@@ -76,6 +80,13 @@ export const  deleteMemberAsync = createAsyncThunk('member/deleteMember',
     async (id: string) => {
         const deleteMemberId = await deleteMemberOperaton(id)
         return deleteMemberId
+    }
+)
+
+export const updateMemberAsync = createAsyncThunk('member/updateMember',
+    async (id: string) => {
+        const member = await updateMemberOperation(id)
+        return member
     }
 )
 

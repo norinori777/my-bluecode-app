@@ -10,6 +10,11 @@ export const addMember = async (name: string, email: string, position: string, s
   return response.data;
 }
 
+export const updateMemberOperation = async (id: string) => {
+  const response = await axios.put(`http://localhost:8080/member/update/${id}`);
+  return response.data;
+}
+
 export const deleteMemberOperaton = async (id: string) => {
   const response = await axios.delete(`http://localhost:8080/member/delete/${id}`);
   return response.data;
