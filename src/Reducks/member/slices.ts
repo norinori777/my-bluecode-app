@@ -8,12 +8,27 @@ export const memberSlice = createSlice({
     name: 'member',
     initialState: initialState,
     reducers: {
+        updateSearchText: (state, action) => {
+            state.searchText = action.payload
+        },
         updateMember: (state, action) => {
             state.member = action.payload
         },
         deleteMember: (state, action) => {
             state.member = state.member.filter((member) => member.id !== action.payload)
+        },
+        partialReset: (state) => {
+            state.loading = false
+            state.error = ''
+            state.member = []
+        },
+        reset: (state) => {
+            state.searchText = ''
+            state.loading = false
+            state.error = ''
+            state.member = []
         }
+
     },
     extraReducers: (builder) => {
         builder
@@ -51,5 +66,5 @@ export const addMemberAsync = createAsyncThunk('member/addMember',
     }
 )
 
-export const { updateMember,deleteMember } = memberSlice.actions
+export const { updateMember,deleteMember, updateSearchText, partialReset, reset } = memberSlice.actions
 export const memberReducer = memberSlice.reducer
