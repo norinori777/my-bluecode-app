@@ -7,7 +7,14 @@ const memberSelector = (state: RootState) => state.member
 
 export const memberItems = createSelector(
     [memberSelector],
-    (state) => state.member
+    (state) => state.searchText === '' ? state.member : state.member.filter((member) => {
+        return member.name.includes(state.searchText) || member.email.includes(state.searchText)
+    })
+)
+
+export const searchTextState = createSelector(
+    [memberSelector],
+    (state) => state.searchText
 )
 
 export const divideMemberToPosition = createSelector(

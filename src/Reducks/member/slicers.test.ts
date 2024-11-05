@@ -16,6 +16,7 @@ describe('memberのslicesのテスト', () => {
     const action = { type: fetchMemberItemsAsync.pending.type };
     const state = memberReducer(initialState, action);
     expect(state).toEqual({
+      searchText: '',
       member: [],
       loading: true,
       error: null,
@@ -34,6 +35,7 @@ describe('memberのslicesのテスト', () => {
 
     const state = store.getState();
     expect(state).toEqual({
+      searchText: '',
       member,
       loading: false,
       error: null,
@@ -48,6 +50,7 @@ describe('memberのslicesのテスト', () => {
 
     const state = store.getState();
     expect(state).toEqual({
+      searchText: '',
       member: [],
       loading: false,
       error: 'Request failed with status code 500',
