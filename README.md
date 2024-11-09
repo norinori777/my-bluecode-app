@@ -192,6 +192,7 @@ module.exports = {
 参考：https://reffect.co.jp/react/redux-toolkit#:~:text=Redux%20Tool
 
 ## reactのルーティング
+### ルーティングコンテンツ
 - 図にあるメニュー部のコンテンツをcontents.tsに配列景色で設定する。コンテンツを追加する場合、以下の定義に追加する。
 - ルーティング対象のコンテンツを読み込むコンポーネントにて以下の設定が読み込まれて、ルーティングコンテンツとして取り込まれる。
   ```
@@ -225,6 +226,53 @@ module.exports = {
   };
   ```
   ![alt text](image.png)
+
+### ルーティング時の状態管理
+画面表示時に、どこから遷移があったかで状態の初期状態をコントロールする。
+例えば、検索条件があるユーザー一覧画面からユーザー詳細画面に遷移して、再度、ユーザー一覧画面に戻った場合は、検索条件は維持されるよにしたい場合、
+ユーザー一覧画面への遷移元がユーザー詳細画面の場合は、検索条件は、維持されるようにする。
+
+遷移元と遷移先の情報を維持するために、react-routeのstateで状態を受け渡す方法をとる。
+以下の方法で、stateで値を受け渡すようにする。
+
+#### navigateの場合
+```
+export const MemberList = (props: MemberListProps) => {
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const handleClick = () => {
+        navigate('/member/add',{state: {nextLocationPath: '/member/add', previousLocationPath: location.pathname}}) // ここでセット　location.pathnameは、現状のpathとなる
+    }
+```
+
+#### Linkの場合
+```
+export const AddMemberContainer = () => {
+    const loading = useSelector(loadingState)
+    const error = useSelector(errorState)
+    const dispatch: AppDispatch = useDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const handleAddMember = (user: AddUserType) => {
+        dispatch(addMemberAsync(user))
+        navigate('/member',{replace: true, state: {nextLocationPath: '/member', previousLocationPath: location.pathname}})
+    }
+```
+
+#### stateの参照
+locationのstateから遷移元のpathを取得して、状態のリセットをコントロール
+```
+    const [isReady, setRady] = useState(false)
+    
+    if(!isReady) {
+        const previousLocationPath = location.state?.previousLocationPath
+        partialResetPath.includes(previousLocationPath) ? dispatch(partialReset()) : dispatch(reset())
+        setRady(true)
+    }
+```
+
 
 ## React Hook Form
 

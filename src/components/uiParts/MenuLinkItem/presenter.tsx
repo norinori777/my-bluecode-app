@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 interface MenuLinkItemProps {
   text: string
@@ -7,9 +7,11 @@ interface MenuLinkItemProps {
 }
 
 export const MenuLinkItem = (props: MenuLinkItemProps) => {
+  const location = useLocation()
   return (
     <>
-      <Link data-testid="linkItem" className="font-medium" to={props.link}>
+      <Link data-testid="linkItem" className="font-medium" to={props.link}
+        state={{previousLocationPath: location.pathname, nextLocationPath: props.link}}>
         {props.text}
       </Link>
     </>

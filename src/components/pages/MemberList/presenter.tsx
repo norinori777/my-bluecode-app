@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { user } from "../../../Reducks/member/types";
 import { BasicTable } from "../../uiParts/BasicTable";
 import { TextMessage } from "../../uiParts/TextMessage"
@@ -14,9 +14,10 @@ const titleHeader = ['id', 'position', 'name', 'email', 'status']
 
 export const MemberList = (props: MemberListProps) => {
     const navigate = useNavigate()
+    const location = useLocation()
 
     const handleClick = () => {
-        navigate('/member/add')
+        navigate('/member/add',{state: {nextLocationPath: '/member/add', previousLocationPath: location.pathname}})
     }
 
     return (
