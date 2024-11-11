@@ -248,17 +248,17 @@ export const MemberList = (props: MemberListProps) => {
 
 #### Linkの場合
 ```
-export const AddMemberContainer = () => {
-    const loading = useSelector(loadingState)
-    const error = useSelector(errorState)
-    const dispatch: AppDispatch = useDispatch()
-    const navigate = useNavigate()
-    const location = useLocation()
-
-    const handleAddMember = (user: AddUserType) => {
-        dispatch(addMemberAsync(user))
-        navigate('/member',{replace: true, state: {nextLocationPath: '/member', previousLocationPath: location.pathname}})
-    }
+export const MenuLinkItem = (props: MenuLinkItemProps) => {
+  const location = useLocation()
+  return (
+    <>
+      <Link data-testid="linkItem" className="font-medium" to={props.link}
+        state={{previousLocationPath: location.pathname, nextLocationPath: props.link}}>
+        {props.text}
+      </Link>
+    </>
+  )
+}
 ```
 
 #### stateの参照
