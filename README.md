@@ -410,6 +410,13 @@ root.render(
     </Worker>
   </React.StrictMode>
 ```
+## DatePickerコンポーネント
+DtePickerを利用するため、以下をインストールする。
+
+```
+yarn add react-datepicker
+yarn add -D @types/react-datepicker
+```
 
 
 ## Re-ducksパターン

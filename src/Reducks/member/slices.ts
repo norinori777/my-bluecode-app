@@ -11,6 +11,12 @@ export const memberSlice = createSlice({
         updateSearchText: (state, action) => {
             state.searchText = action.payload
         },
+        updateStartDate: (state, action) => {
+            state.startDate = action.payload
+        },
+        updateEndDate: (state, action) => {
+            state.endDate = action.payload
+        },
         updateMember: (state, action) => {
             state.member = action.payload
         },
@@ -24,6 +30,8 @@ export const memberSlice = createSlice({
         },
         reset: (state) => {
             state.searchText = ''
+            state.startDate = null
+            state.endDate = null
             state.loading = false
             state.error = ''
             state.member = []
@@ -66,5 +74,5 @@ export const addMemberAsync = createAsyncThunk('member/addMember',
     }
 )
 
-export const { updateMember,deleteMember, updateSearchText, partialReset, reset } = memberSlice.actions
+export const { updateMember,deleteMember, updateSearchText, updateStartDate, updateEndDate, partialReset, reset } = memberSlice.actions
 export const memberReducer = memberSlice.reducer

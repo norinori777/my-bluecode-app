@@ -17,6 +17,8 @@ describe('memberのslicesのテスト', () => {
     const state = memberReducer(initialState, action);
     expect(state).toEqual({
       searchText: '',
+      startDate: null,
+      endDate: null,
       member: [],
       loading: true,
       error: null,
@@ -36,6 +38,8 @@ describe('memberのslicesのテスト', () => {
     const state = store.getState();
     expect(state).toEqual({
       searchText: '',
+      startDate: null,
+      endDate: null,
       member,
       loading: false,
       error: null,
@@ -51,6 +55,8 @@ describe('memberのslicesのテスト', () => {
     const state = store.getState();
     expect(state).toEqual({
       searchText: '',
+      startDate: null,
+      endDate: null,
       member: [],
       loading: false,
       error: 'Request failed with status code 500',
