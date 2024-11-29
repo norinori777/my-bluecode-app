@@ -12,6 +12,16 @@ export const memberItems = createSelector(
     })
 )
 
+export const startDateState = createSelector(
+    [memberSelector],
+    (state) => state.startDate
+)
+
+export const endDateState = createSelector(
+    [memberSelector],
+    (state) => state.endDate
+)  
+
 export const searchTextState = createSelector(
     [memberSelector],
     (state) => state.searchText
