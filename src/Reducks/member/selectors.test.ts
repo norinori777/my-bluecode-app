@@ -10,6 +10,8 @@ describe('member selectors', () => {
         todo: { todos:[], loading: false, error: null },
         member: {
             searchText: '',
+            startDate: null,
+            endDate: null,
             member: [{ id: '1', position: 'general', name: 'John Doe', email: 'hoge@hoge.co.jp', status: true }],
             loading: false,
             error: null,
