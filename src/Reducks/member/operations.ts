@@ -9,3 +9,13 @@ export const addMember = async (name: string, email: string, position: string, s
   const response = await axios.post('http://localhost:8080/member/add', { name: name, email: email, position: position, status: status });
   return response.data;
 }
+
+export const updateMemberOperation = async (id: string) => {
+  const response = await axios.put(`http://localhost:8080/member/update/${id}`);
+  return response.data;
+}
+
+export const deleteMemberOperaton = async (id: string) => {
+  const response = await axios.delete(`http://localhost:8080/member/delete/${id}`);
+  return response.data;
+}

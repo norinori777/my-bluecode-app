@@ -27,8 +27,8 @@ describe('memberのslicesのテスト', () => {
 
   it('fetchMemberItemsAsyncが情報取得できた場合', async () => {
     const member = [
-      { id: 1, name: 'John Doe', email: 'john.doe@example.com' },
-      { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com' },
+      { id: '1', name: 'John Doe', email: 'john.doe@example.com' },
+      { id: '2', name: 'Jane Smith', email: 'jane.smith@example.com' },
     ];
     mock.onGet('http://localhost:8080/member').reply(200, member);
 
