@@ -10,12 +10,12 @@ interface SearchMemberFormProps {
     searchText: string | ''
     startDate: Date | null
     endDate: Date | null
-    onValid: (text: string, startDate: string, endDate: string) => void
+    onValid: (text: string, startDate: Date, endDate: Date) => void
     onInvalid: () => void
 }
 
 export const SearchMemberForm = (props: SearchMemberFormProps) => {
-    const { register, handleSubmit, watch, setValue, formState: {errors} } = useForm(
+    const { register, handleSubmit, setValue, formState: {errors} } = useForm(
         {
             defaultValues: {
                 searchText: props.searchText || '',
@@ -27,8 +27,8 @@ export const SearchMemberForm = (props: SearchMemberFormProps) => {
     )
 
     const searchTextRegister = register('searchText')
-    const startDateRegister = register('startDate')
-    const endDateRegister = register('endDate')
+    const setStartDate = (date: Date) => setValue('startDate', date)
+    const setEndDate = (date: Date) => setValue('endDate', date)
 
     const onSubmit = (data: any) => {
         props.onValid(data.searchText || '', data.startDate, data.endDate)
@@ -37,9 +37,6 @@ export const SearchMemberForm = (props: SearchMemberFormProps) => {
     const onSubmitError = (error: any) => {
         props.onInvalid()
     }
-
-     // フィールドの値を監視
-     const watchAllFields = watch()
 
     return (
         <>
@@ -53,8 +50,7 @@ export const SearchMemberForm = (props: SearchMemberFormProps) => {
                                     label="開始日" 
                                     placeholder="開始日を選択してください。" theme="primary" 
                                     description=""
-                                    register={startDateRegister}
-                                    setValue={setValue} />
+                                    setValue={setStartDate} />
                                 <div className="pl-4 -mt-4">
                                     <TextMessage text={errors.startDate?.message || ''} size="sm" theme="danger" />
                                 </div>
@@ -65,8 +61,7 @@ export const SearchMemberForm = (props: SearchMemberFormProps) => {
                                     label="終了日" 
                                     placeholder="終了日を選択してください。" theme="primary" 
                                     description=""
-                                    register={endDateRegister}
-                                    setValue={setValue} />
+                                    setValue={setEndDate} />
                                 <div className="pl-4 -mt-4">
                                     <TextMessage text={errors.endDate?.message || ''} size="sm" theme="danger" />
                                 </div>

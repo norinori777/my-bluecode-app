@@ -410,14 +410,47 @@ root.render(
     </Worker>
   </React.StrictMode>
 ```
+
 ## DatePickerコンポーネント
-DtePickerを利用するため、以下をインストールする。
+
+### react-datepicker導入
 
 ```
 yarn add react-datepicker
 yarn add -D @types/react-datepicker
 ```
 
+### DatePickerを利用したコンポーネント作成
+
+#### React-Hook-Formへの値受け渡し
+
+DtePickerを利用するため、以下をインストールする。
+React-hook-formの非制御に対応するDatePickerを利用したコンポーネントを作成。
+ただ、DatePickerは、そのままでは、非制御に値を渡すことができない。
+そのため、React-Hook-FormのsetValueメソッドを使用して、React-Hook-Form側に値を渡すメソッドを作成。
+作成したメソッドをPropとして受け取ることで、Reat-Hook-Form側に値を渡すことが可能となった。
+
+#### カレンダーからのみ更新
+
+デフォルトでは、テキストボックスから自由入力ができ、かつ、カレンダーからも選択できる使用となっている。
+カレンダーからのみ更新可能とする場合、customInputオプションを利用して、customInputは、入力項目を
+カスタマイズできるオプションとなる。このオプションを使用して以下のように<p>タグに変更して、入力できないようにした。
+
+```
+customInput={<p className="block w-full p-2.5 border rounded bg-white">{selectedDate ? selectedDate.toLocaleString() : props.placeholder}</p>}
+```
+
+また、カレンダーIconを追加して、カレンダーIconのonClickに以下のメソッドを指定することでカレンダーの開閉ができるように以下の対応を実施。
+
+```
+  const handleCalendar = () => {
+    if(datePickerRef.current?.isCalendarOpen){
+      datePickerRef.current?.setOpen(true)
+    } else {
+      datePickerRef.current?.setOpen(false)
+    }
+  }
+```
 
 ## Re-ducksパターン
 

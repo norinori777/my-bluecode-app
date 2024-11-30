@@ -25,7 +25,7 @@ export const MemberListContainer = () => {
         setRady(true)
     }
 
-    const handleSearch = (searchText:string, startDate: string, endDate: string) => {
+    const handleSearch = (searchText:string, startDate: Date, endDate: Date) => {
         dispatch(updateSearchText(searchText))
         dispatch(updateStartDate(startDate))
         dispatch(updateEndDate(endDate))

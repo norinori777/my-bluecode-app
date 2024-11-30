@@ -14,6 +14,7 @@
     "@types/react-dom": "^18.3.0",
     "axios": "^1.7.7",
     "axios-mock-adapter": "^2.1.0",
+    "canvas": "^2.11.2",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "msw": "^2.5.2",
