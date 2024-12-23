@@ -1,0 +1,66 @@
+import React from 'react';
+import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+interface FormValues {
+  items: { name: string; age: number }[];
+}
+
+const schema = yup.object().shape({
+  items: yup.array().of(
+    yup.object().shape({
+      name: yup.string().required('Name is required'),
+      age: yup.number().required('Age is required').positive('Age must be positive').integer('Age must be an integer'),
+    })
+  ),
+});
+
+const DynamicForm: React.FC = () => {
+  const { control, handleSubmit, register, formState: { errors } } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      items: [{ name: '', age: 0 }],
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'items',
+  });
+
+  const onSubmit = (data: FormValues) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {fields.map((field, index) => (
+        <div key={field.id}>
+          <label>
+            Name:
+            <input
+              {...register(`items.${index}.name` as const)}
+              defaultValue={field.name}
+            />
+            {errors.items?.[index]?.name && <p>{errors.items[index].name?.message}</p>}
+          </label>
+          <label>
+            Age:
+            <input
+              type="number"
+              {...register(`items.${index}.age` as const)}
+              defaultValue={field.age}
+            />
+            {errors.items?.[index]?.age && <p>{errors.items[index].age?.message}</p>}
+          </label>
+          <button type="button" onClick={() => remove(index)}>Remove</button>
+        </div>
+      ))}
+      <button type="button" onClick={() => append({ name: '', age: 0 })}>Add Item</button>
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default DynamicForm;

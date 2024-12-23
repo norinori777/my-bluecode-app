@@ -3,6 +3,8 @@ import { user } from "../../../Reducks/member/types";
 import { BasicTable } from "../../uiParts/BasicTable";
 import { TextMessage } from "../../uiParts/TextMessage"
 import { LinkWithIcon } from "../../uiParts/LinkWithIcon";
+import { LineChartComponent } from "../../uniqueParts/LineChart";
+import { BarChartComponent } from "../../uniqueParts/BarChart";
 
 interface MemberListProps {
     memberList: user[];
@@ -32,6 +34,8 @@ export const MemberList = (props: MemberListProps) => {
                     <BasicTable<user> titleHeader={titleHeader} items={props.memberList} />
                 </div>
             </div>}
+            <LineChartComponent />
+            <BarChartComponent />
         </div>
     )
 }

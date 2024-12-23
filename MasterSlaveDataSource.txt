@@ -1,0 +1,201 @@
+◆Spring Bootを使用した例
+
+アプリケーションコードで、書き込み操作をマスターに、読み取り操作をスレーブに振り分けるロジックを実装します。以下に、Spring Bootを使用した例を示します。
+
+
+〇DataSourceConfig.java
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+@Configuration
+public class DataSourceConfig {
+
+    @Bean(name = "masterDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.master")
+    public DataSource masterDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "slaveDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.slave")
+    public DataSource slaveDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    public DataSource routingDataSource(
+            @Qualifier("masterDataSource") DataSource masterDataSource,
+            @Qualifier("slaveDataSource") DataSource slaveDataSource) {
+
+        AbstractRoutingDataSource routingDataSource = new AbstractRoutingDataSource() {
+            @Override
+            protected Object determineCurrentLookupKey() {
+                return DataSourceContextHolder.getDataSourceType();
+            }
+        };
+
+        Map<Object, Object> targetDataSources = new HashMap<>();
+        targetDataSources.put("master", masterDataSource);
+        targetDataSources.put("slave", slaveDataSource);
+
+        routingDataSource.setTargetDataSources(targetDataSources);
+        routingDataSource.setDefaultTargetDataSource(masterDataSource);
+
+        return routingDataSource;
+    }
+}
+
+
+〇DataSourceContextHolder.java
+
+public class DataSourceContextHolder {
+
+    private static final ThreadLocal<String> contextHolder = new ThreadLocal<>();
+
+    public static void setDataSourceType(String dataSourceType) {
+        contextHolder.set(dataSourceType);
+    }
+
+    public static String getDataSourceType() {
+        return contextHolder.get();
+    }
+
+    public static void clearDataSourceType() {
+        contextHolder.remove();
+    }
+}
+
+〇DataSourceAspect.java
+
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+@Aspect
+@Component
+public class DataSourceAspect {
+
+    @Before("@annotation(transactional) && execution(* com.example..*Service.*(..))")
+    public void setDataSourceKey(Transactional transactional) {
+        if (transactional.readOnly()) {
+            DataSourceContextHolder.setDataSourceType("slave");
+        } else {
+            DataSourceContextHolder.setDataSourceType("master");
+        }
+    }
+}
+
+〇application.yml
+
+spring:
+  datasource:
+    master:
+      url: jdbc:postgresql://master-db-host:5432/mydb
+      username: myuser
+      password: mypassword
+      driver-class-name: org.postgresql.Driver
+    slave:
+      url: jdbc:postgresql://slave-db-host:5432/mydb
+      username: myuser
+      password: mypassword
+      driver-class-name: org.postgresql.Driver
+
+
+
+
+
+
+
+◆データベース接続プールの設定
+HikariCPなどのデータベース接続プールを使用して、読み取り専用の接続をスレーブに振り分ける方法です。
+
+〇application.yml
+
+spring:
+  datasource:
+    hikari:
+      master:
+        jdbc-url: jdbc:postgresql://master-db-host:5432/mydb
+        username: myuser
+        password: mypassword
+        driver-class-name: org.postgresql.Driver
+      slave:
+        jdbc-url: jdbc:postgresql://slave-db-host:5432/mydb
+        username: myuser
+        password: mypassword
+        driver-class-name: org.postgresql.Driver
+
+
+〇DataSourceConfig.java
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+@Configuration
+public class DataSourceConfig {
+
+    @Bean(name = "masterDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.hikari.master")
+    public DataSource masterDataSource() {
+        return new HikariDataSource();
+    }
+
+    @Bean(name = "slaveDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.hikari.slave")
+    public DataSource slaveDataSource() {
+        return new HikariDataSource();
+    }
+
+    @Bean
+    public DataSource routingDataSource(
+            @Qualifier("masterDataSource") DataSource masterDataSource,
+            @Qualifier("slaveDataSource") DataSource slaveDataSource) {
+
+        AbstractRoutingDataSource routingDataSource = new AbstractRoutingDataSource() {
+            @Override
+            protected Object determineCurrentLookupKey() {
+                return DataSourceContextHolder.getDataSourceType();
+            }
+        };
+
+        Map<Object, Object> targetDataSources = new HashMap<>();
+        targetDataSources.put("master", masterDataSource);
+        targetDataSources.put("slave", slaveDataSource);
+
+        routingDataSource.setTargetDataSources(targetDataSources);
+        routingDataSource.setDefaultTargetDataSource(masterDataSource);
+
+        return routingDataSource;
+    }
+}
+
+
+
+
+
+まとめ
+PostgreSQLのマスタースレーブ構成で、書き込みをマスターにのみ行い、読み込みをスレーブに振り分ける方法として、
+アプリケーションレベルでの振り分け、データベース接続プールの設定があります。
+Spring Bootを使用した例では、カスタムルーティングデータソースを作成し、
+AOPを使用して読み取り専用トランザクションをスレーブに振り分ける方法を示しました。
+データベース接続プールを使用する方法では、HikariCPの設定例を示しました。
+これらの方法を使用して、効率的に読み書きを振り分けることができます。
