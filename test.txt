@@ -64,3 +64,141 @@ const DynamicForm: React.FC = () => {
 };
 
 export default DynamicForm;
+
+
+GeoLite2データベースを利用してIPアドレスから地域情報を取得するためには、MaxMindのGeoIP2 Java APIを使用することができます。以下に、Spring BootアプリケーションでGeoLite2データベースを使用してIPアドレスから地域情報を取得する方法を示します。
+
+1. 依存関係の追加
+まず、pom.xmlにMaxMindのGeoIP2ライブラリの依存関係を追加します。
+
+```
+<dependencies>
+    <!-- existing dependencies -->
+    <dependency>
+        <groupId>com.maxmind.geoip2</groupId>
+        <artifactId>geoip2</artifactId>
+        <version>3.0.1</version>
+    </dependency>
+</dependencies>
+```
+
+2. GeoLite2データベースのダウンロード
+MaxMindのウェブサイトからGeoLite2データベースをダウンロードします。データベースファイル（GeoLite2-City.mmdbなど）をプロジェクトのリソースディレクトリ（src/main/resources）に配置します。
+
+3. GeoIP2サービスの実装
+次に、GeoIP2サービスを実装します。このサービスは、IPアドレスから地域情報を取得するためのメソッドを提供します。
+
+GeoIP2Service.java
+```
+```
+package com.example.demo.service;
+
+import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+import com.maxmind.geoip2.model.CityResponse;
+import com.maxmind.geoip2.record.Country;
+import com.maxmind.geoip2.record.City;
+import com.maxmind.geoip2.record.Location;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+
+@Service
+public class GeoIP2Service {
+
+    private DatabaseReader dbReader;
+
+    @PostConstruct
+    public void init() throws IOException {
+        File database = new File(getClass().getClassLoader().getResource("GeoLite2-City.mmdb").getFile());
+        dbReader = new DatabaseReader.Builder(database).build();
+    }
+
+    public CityResponse getCityResponse(String ip) throws IOException, GeoIp2Exception {
+        InetAddress ipAddress = InetAddress.getByName(ip);
+        return dbReader.city(ipAddress);
+    }
+
+    public String getCountryName(String ip) throws IOException, GeoIp2Exception {
+        CityResponse response = getCityResponse(ip);
+        Country country = response.getCountry();
+        return country.getName();
+    }
+
+    public String getCityName(String ip) throws IOException, GeoIp2Exception {
+        CityResponse response = getCityResponse(ip);
+        City city = response.getCity();
+        return city.getName();
+    }
+
+    public Location getLocation(String ip) throws IOException, GeoIp2Exception {
+        CityResponse response = getCityResponse(ip);
+        return response.getLocation();
+    }
+}
+```
+
+4. コントローラーの実装
+次に、GeoIP2サービスを使用してIPアドレスから地域情報を取得するためのコントローラーを実装します。
+
+GeoIPController.java
+```
+package com.example.demo.service;
+
+import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+import com.maxmind.geoip2.model.CityResponse;
+import com.maxmind.geoip2.record.Country;
+import com.maxmind.geoip2.record.City;
+import com.maxmind.geoip2.record.Location;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+
+@Service
+public class GeoIP2Service {
+
+    private DatabaseReader dbReader;
+
+    @PostConstruct
+    public void init() throws IOException {
+        File database = new File(getClass().getClassLoader().getResource("GeoLite2-City.mmdb").getFile());
+        dbReader = new DatabaseReader.Builder(database).build();
+    }
+
+    public CityResponse getCityResponse(String ip) throws IOException, GeoIp2Exception {
+        InetAddress ipAddress = InetAddress.getByName(ip);
+        return dbReader.city(ipAddress);
+    }
+
+    public String getCountryName(String ip) throws IOException, GeoIp2Exception {
+        CityResponse response = getCityResponse(ip);
+        Country country = response.getCountry();
+        return country.getName();
+    }
+
+    public String getCityName(String ip) throws IOException, GeoIp2Exception {
+        CityResponse response = getCityResponse(ip);
+        City city = response.getCity();
+        return city.getName();
+    }
+
+    public Location getLocation(String ip) throws IOException, GeoIp2Exception {
+        CityResponse response = getCityResponse(ip);
+        return response.getLocation();
+    }
+}
+```
+5. アプリケーションの実行
+これで、Spring Bootアプリケーションを実行し、IPアドレスから地域情報を取得するエンドポイントが利用可能になります。以下のようにエンドポイントにアクセスすることで、IPアドレスに対応する国名、都市名、位置情報を取得できます。
+
+国名を取得するエンドポイント: http://localhost:8080/geoip/country?ip=8.8.8.8
+都市名を取得するエンドポイント: http://localhost:8080/geoip/city?ip=8.8.8.8
+位置情報を取得するエンドポイント: http://localhost:8080/geoip/location?ip=8.8.8.8
+これにより、Spring BootアプリケーションでGeoLite2データベースを使用してIPアドレスから地域情報を取得することができます。
