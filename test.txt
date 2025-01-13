@@ -202,3 +202,142 @@ public class GeoIP2Service {
 都市名を取得するエンドポイント: http://localhost:8080/geoip/city?ip=8.8.8.8
 位置情報を取得するエンドポイント: http://localhost:8080/geoip/location?ip=8.8.8.8
 これにより、Spring BootアプリケーションでGeoLite2データベースを使用してIPアドレスから地域情報を取得することができます。
+
+
+### Deployment File
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app
+        image: openjdk:17-jdk-alpine
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:postgresql://postgres-master:5432/Chat"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "hoge"
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "hogehoge77"
+        - name: SPRING_DATASOURCE_REPLICA_URL
+          value: "jdbc:postgresql://postgres-replica:5432/Chat"
+        - name: SPRING_DATASOURCE_REPLICA_USERNAME
+          value: "hoge"
+        - name: SPRING_DATASOURCE_REPLICA_PASSWORD
+          value: "hogehoge77"
+        volumeMounts:
+        - name: app-jar
+          mountPath: /app.jar
+          subPath: demo-0.0.1-SNAPSHOT.jar
+        command: ["java", "-jar", "/app.jar"]
+      volumes:
+      - name: app-jar
+        hostPath:
+          path: /C:/work/test3/target/demo-0.0.1-SNAPSHOT.jar
+          type: File
+```
+
+### Service File
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  selector:
+    app: app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+```
+
+注意点
+hostPathを使用してホストのファイルをコンテナーにマウントしていますが、これは開発環境での使用に限られます。本番環境では、ConfigMapやPersistentVolumeを使用することを検討してください。
+depends_onはKubernetesには直接対応する機能がないため、必要に応じてPodの起動順序を管理するための他の方法（例：Init Containers）を検討してください。
+これらのファイルを適用することで、Kubernetesクラスターにデプロイできます。
+
+```
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+```
+
+
+
+
+KubernetesのServiceにはいくつかのタイプがあり、それぞれ異なる方法でネットワークトラフィックを管理します。主なServiceタイプには、ClusterIP、NodePort、LoadBalancer、およびExternalNameがあります。ここでは、NodePortとLoadBalancerの違いについて説明します。
+
+NodePort
+概要:
+NodePortは、各ノードの特定のポート（30000-32767の範囲）を開放し、そのポートを通じてServiceにアクセスできるようにします。
+使用方法:
+クラスター外部からノードのIPアドレスと指定されたポートを使用してアクセスします。
+利点:
+簡単に設定でき、外部からのアクセスが可能です。
+欠点:
+ノードのIPアドレスを知っている必要があり、負荷分散機能が限られています。
+LoadBalancer
+概要:
+LoadBalancerは、クラウドプロバイダー（AWS、GCP、Azureなど）のロードバランサーをプロビジョニングし、外部IPアドレスを取得してトラフィックを分散します。
+使用方法:
+クラウドプロバイダーが提供する外部IPアドレスを使用してアクセスします。
+利点:
+クラウドプロバイダーのロードバランサーを利用するため、スケーラビリティと高可用性が向上します。
+欠点:
+クラウドプロバイダーに依存しており、追加のコストが発生する場合があります。
+例: NodePortとLoadBalancerのService定義
+NodePortの例
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  type: NodePort
+  selector:
+    app: app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30036  # このポートは30000-32767の範囲で指定
+```
+LoadBalancerの例
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+```
+まとめ
+NodePort:
+
+各ノードの特定のポートを開放し、外部からアクセス可能にします。
+簡単に設定できるが、負荷分散機能が限られています。
+LoadBalancer:
+
+クラウドプロバイダーのロードバランサーを利用し、外部IPアドレスを取得してトラフィックを分散します。
+スケーラビリティと高可用性が向上しますが、クラウドプロバイダーに依存し、追加のコストが発生する場合があります。
+これらの違いを理解し、アプリケーションの要件に応じて適切なServiceタイプを選択してください。
