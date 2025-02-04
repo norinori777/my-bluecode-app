@@ -529,6 +529,34 @@ ErrorBoundaryコンポーネントで配下のコンポーネントをくくる�
 yarn add react-error-boundary
 ```
 
+### ErrorBoundaryの利用
+以下のようにErrorBoundaryコンポーネントでくくり、FallBackComponentでエラーに表示したいコンポーネントを指定する。
+
+```
+import { ErrorFallback } from "../ErrorFallback";
+import { ErrorPresenter } from "./presenter"
+import { ErrorBoundary } from 'react-error-boundary';
+
+export const ErrorContainer = () => {
+    return(
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <ErrorPresenter />
+        </ErrorBoundary>
+    ) 
+}
+```
+
+### エラー表示時のコンポーネント
+```
+import React from 'react';
+
+export const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) => (
+    <div>
+        <h1>エラーが発生しました。初めからやり直してください。</h1>
+    </div>
+);
+```
+
 ## Re-ducksパターン
 
 ```
