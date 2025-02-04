@@ -521,6 +521,14 @@ options: グラフの表示や動作に関する設定を行います。レス�
 これらの設定を適切に行うことで、Chart.jsを使用してカスタマイズされたグラフを描画することができます。
 ```
 
+## Error Boundary
+ErrorBoundaryコンポーネントで配下のコンポーネントをくくると、配下のエラーが発生した場合、ErrorBoundaryで指定したコンポーネントを表示することができる。
+
+### インストール
+```
+yarn add react-error-boundary
+```
+
 ## Re-ducksパターン
 
 ```

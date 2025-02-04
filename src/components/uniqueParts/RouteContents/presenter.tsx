@@ -18,19 +18,19 @@ export const  Contents = (props: ContentsProps) => {
 const generateRoutes = (contents: ContentsProps['contents'], componentMap: ComponentMap) => {
     return createRoutesFromElements(
         <>
-        <Route element={<RouteLayout />}>
-          {contents.map((content) => {
-              const Component = componentMap[content.componentId]
-              return (
-                <Route
-                key={content.key}
-                path={content.link}
-                element={<Component label={content.key} />}
-                />
-              )
-          })}
-          <Route path="*" element={<p>{'見つかりません。'}</p>} />
-        </Route>
+          <Route element={<RouteLayout />}>
+            {contents.map((content) => {
+                const Component = componentMap[content.componentId]
+                return (
+                  <Route
+                  key={content.key}
+                  path={content.link}
+                  element={<Component label={content.key} />}
+                  />
+                )
+              })}
+            <Route path="*" element={<p>{'見つかりません。'}</p>} />
+          </Route>
         </>
     )
 }

@@ -10,6 +10,7 @@ import { DragAndDropContainer } from "../components/pages/DragAndDrop"
 import { PaginationTableContainer } from "../components/pages/PaginationTable"
 import { MultiTablesContainer } from "../components/pages/MultiTables"
 import { FileUploadContainer } from "../components/pages/Fileupload/container"
+import { ErrorContainer} from "../components/pages/Error/container"
 
 const TodoLazy = React.lazy(() => import('../components/pages/Todo').then(module => ({ default: module.Todo })))
 const MemberListLazy = React.lazy(() => import('../components/pages/MemberList').then(module => ({ default: module.MemberList })))
@@ -25,6 +26,7 @@ export const contentItems: ContentItem[] = [
   { link: '/pagination', key: 'pagination', componentId: 'PaginationTable'},
   { link: '/fileupload', key: 'fileupload', componentId: 'FileUpload' },
   {link: '/multiTables', key: 'multiTables', componentId: 'MultiTables'},
+  {link: '/error', key: 'error', componentId: 'Error'}
 ]
 
 export const headerMenuItems: HeaderMenuItem[] = [
@@ -36,6 +38,7 @@ export const headerMenuItems: HeaderMenuItem[] = [
   { text: 'PaginationTable', initialLink: '/pagination'},
   { text: 'FileUpload', initialLink: '/fileupload' },
   { text: 'MultiTables', initialLink: '/multiTables' },
+  { text: 'Error', initialLink: '/error' },
 ]
 
 export const componentMap: ComponentMap = {
@@ -48,5 +51,6 @@ export const componentMap: ComponentMap = {
   'AddMember': AddMemberContainer,
   'DragAndDrop': DragAndDropContainer,
   'PaginationTable': PaginationTableContainer,
-  'MultiTables': MultiTablesContainer
+  'MultiTables': MultiTablesContainer,
+  'Error': ErrorContainer
 };
