@@ -1077,3 +1077,286 @@ WHERE sale_date < '2023-01-01';
 
 
 
+
+
+
+  GitHub Copilot
+Reactでモーダルを開いた際に親側のスクロールを移動させないようにするには、モーダルが開かれたときに親要素のスクロールを無効にし、モーダルが閉じられたときにスクロールを再度有効にする必要があります。以下のように実装できます。
+
+モーダルが開かれたときにbodyのスクロールを無効にする。
+モーダルが閉じられたときにbodyのスクロールを有効にする。
+以下はその実装例です。
+
+```
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
+
+const Modal = ({ isOpen, onClose }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
+  if (!isOpen) {
+    return null;
+  }
+
+  return ReactDOM.createPortal(
+    <div className="modal">
+      <div className="modal-content">
+        <button onClick={onClose}>Close</button>
+        <p>モーダルの内容</p>
+      </div>
+    </div>,
+    document.body
+  );
+};
+
+export default Modal;
+```
+
+この例では、isOpenがtrueの場合にモーダルが表示され、bodyのスクロールが無効になります。モーダルが閉じられると、bodyのスクロールが再度有効になります。
+
+モーダルを使用するコンポーネントは以下のようになります。
+
+```
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
+
+const Modal = ({ isOpen, onClose }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
+  if (!isOpen) {
+    return null;
+  }
+
+  return ReactDOM.createPortal(
+    <div className="modal">
+      <div className="modal-content">
+        <button onClick={onClose}>Close</button>
+        <p>モーダルの内容</p>
+      </div>
+    </div>,
+    document.body
+  );
+};
+
+export default Modal;
+```
+
+
+
+
+
+
+表示部分のみの中央位置にローディングを表示するには、ローディングコンポーネントを親要素の中央に配置するスタイルを適用する必要があります。以下はその実装例です。
+
+まず、ローディングコンポーネントを作成します。
+
+```
+import React from 'react';
+import './Loading.css';
+
+const Loading = () => {
+  return (
+    <div className="loading-container">
+      <div className="loading-spinner"></div>
+    </div>
+  );
+};
+
+export default Loading;
+```
+
+次に、Loading.cssファイルでスタイルを定義します。
+
+```
+.loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+```
+
+このスタイルでは、loading-containerが親要素の中央に配置されるように設定されています。position: absolute;とtransform: translate(-50%, -50%);を使用して、親要素の中央にローディングスピナーを配置します。
+
+次に、ローディングコンポーネントを使用するコンポーネントを作成します。
+
+```
+import React, { useState, useEffect } from 'react';
+import Loading from './Loading';
+
+const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate a network request
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+
+  return (
+    <div style={{ position: 'relative', height: '100vh' }}>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div>
+          <h1>コンテンツがここに表示されます</h1>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
+```
+
+この例では、Appコンポーネントがローディング状態を管理し、ローディング中はLoadingコンポーネントを表示します。Loadingコンポーネントは親要素の中央に表示されます。Appコンポーネントのスタイルにposition: relative;を設定することで、Loadingコンポーネントが親要素の中央に配置されるようになります。
+
+
+
+React Routerを使用して、一覧ページから詳細ページに遷移後、詳細ページから一覧に戻った際に一覧ページのスクロール位置を維持するには、スクロール位置を保存しておき、戻った際にその位置にスクロールする必要があります。以下の手順で実装できます。
+
+一覧ページのスクロール位置を保存する。
+詳細ページから戻った際に保存したスクロール位置にスクロールする。
+以下はその実装例です。
+
+スクロール位置を保存するためのカスタムフック
+まず、スクロール位置を保存するためのカスタムフックを作成します。
+
+```
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
+const useScrollRestoration = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.scrollPosition) {
+      window.scrollTo(0, location.state.scrollPosition);
+    }
+  }, [location]);
+};
+
+export default useScrollRestoration;
+```
+
+
+一覧ページコンポーネント
+次に、一覧ページコンポーネントでスクロール位置を保存し、詳細ページに遷移する際にその位置を状態として渡します。
+
+```
+import React from 'react';
+import { Link } from 'react-router-dom';
+import useScrollRestoration from './useScrollRestoration';
+
+const ListPage = () => {
+  useScrollRestoration();
+
+  const handleLinkClick = (e, id) => {
+    const scrollPosition = window.scrollY;
+    e.preventDefault();
+    window.history.pushState({ scrollPosition }, '', `/details/${id}`);
+  };
+  ```
+
+  return (
+    <div>
+      <h1>一覧ページ</h1>
+      <ul>
+        <li>
+          <Link to="/details/1" onClick={(e) => handleLinkClick(e, 1)}>詳細ページ 1</Link>
+        </li>
+        <li>
+          <Link to="/details/2" onClick={(e) => handleLinkClick(e, 2)}>詳細ページ 2</Link>
+        </li>
+        {/* 他のリストアイテム */}
+      </ul>
+    </div>
+  );
+};
+
+export default ListPage;
+```
+
+詳細ページコンポーネント
+詳細ページコンポーネントは特に変更は必要ありませんが、戻るリンクを追加しておくと便利です。
+
+
+```
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+const DetailPage = ({ match }) => {
+  return (
+    <div>
+      <h1>詳細ページ {match.params.id}</h1>
+      <Link to="/">一覧に戻る</Link>
+    </div>
+  );
+};
+
+export default DetailPage;
+```
+
+ルーティング設定
+最後に、React Routerのルーティング設定を行います。
+
+```
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ListPage from './ListPage';
+import DetailPage from './DetailPage';
+
+const App = () => {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" exact component={ListPage} />
+        <Route path="/details/:id" component={DetailPage} />
+      </Switch>
+    </Router>
+  );
+};
+
+export default App;
+```
+
+この実装により、一覧ページから詳細ページに遷移した際にスクロール位置が保存され、詳細ページから戻った際に一覧ページのスクロール位置が維持されます。
